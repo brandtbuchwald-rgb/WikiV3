@@ -9,19 +9,25 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css" id="darkTheme">
 
-    <style>
-      :root{ --theme-color:#3F51B5; }
-      /* Fixed theme toggle (stays out of the drawer) */
-      .theme-toggle{
-        position:fixed; top:8px; right:12px; z-index:10000;
-        border:1px solid var(--mono-tint2); border-radius:10px;
-        background:transparent; padding:.35rem .55rem; font-size:18px;
-      }
-      /* Sidebar polish */
-      .sidebar{ width:280px; }
-      .sidebar .search input{ border-radius:10px; }
-      .sidebar-nav a{ font-size:15px; line-height:1.35; }
-    </style>
+   <style>
+  :root {
+    --sidebar-bg: #0f172a;
+    --sidebar-text: #cbd5e1;
+    --sidebar-link: #93c5fd;
+    --sidebar-link-active: #ffffff;
+    --sidebar-border: #1f2937;
+  }
+  .sidebar {
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    color: var(--sidebar-text);
+  }
+  .sidebar a { color: var(--sidebar-link); }
+  .sidebar a.active, .sidebar li.active > a {
+    color: var(--sidebar-link-active);
+    font-weight: 600;
+  }
+</style>
   </head>
   <body>
     <div id="app">Loading EHT Companion Hub…</div>
