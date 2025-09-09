@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EHT Companion Hub</title>
 
-  <!-- Docsify Themeable CSS -->
+  <!-- Docsify Themeable CSS (baseline layout + sidebar support) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 
   <style>
@@ -21,7 +21,7 @@
   --eht-shadow:    rgba(0,0,0,.5);
 }
 
-/* Pixel font for headings */
+/* Pixel-style font for headings */
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 /* ===== Global ===== */
@@ -34,44 +34,23 @@ body {
 a { color: var(--eht-link); text-decoration: none; }
 a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
 
-/* ===== Content area ===== */
-.markdown-section {
-  background: linear-gradient(#2a3d42, #1b2b2e) padding-box,
-              linear-gradient(180deg, #f1e1c4, #8b6a3d 70%, #3e2c18) border-box;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  padding: 18px 22px;
-  box-shadow: inset 0 1px 0 #2a3d42, 0 10px 26px -8px var(--eht-shadow);
-}
-.markdown-section h1,
-.markdown-section h2 {
-  font-family: 'VT323', ui-monospace, monospace;
-  color: var(--eht-gold);
-  text-shadow: 0 1px 0 #000;
-  margin-top: .4em;
-  margin-bottom: .4em;
-}
-.markdown-section h1 { font-size: 40px; }
-.markdown-section h2 { font-size: 32px; }
-
-/* ===== Sidebar with parchment ===== */
+/* ===== Sidebar (parchment + torn overlay) ===== */
 .sidebar {
-  background:
-    linear-gradient(rgba(255,255,255,.85), rgba(255,255,255,.85)),
-    url('assets/textures/parchment.jpg');
-  background-size: cover;
+  background: url("assets/textures/parchment.jpg") center/cover no-repeat;
   border: 3px solid var(--eht-trim);
   border-radius: 6px;
   box-shadow: 0 0 15px rgba(0,0,0,0.7);
   position: relative;
-  overflow-y: auto;
+  overflow: hidden;
 }
 .sidebar::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  box-shadow: inset 0 0 40px rgba(0,0,0,.25);
+  background: url("assets/textures/torn-frame.png") center/cover no-repeat;
+  opacity: 0.65;
+  mix-blend-mode: multiply;
   border-radius: 6px;
 }
 .sidebar .app-name {
@@ -124,6 +103,39 @@ a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
   filter: drop-shadow(0 0 6px rgba(255, 255, 150, 0.8));
 }
 
+/* ===== Content panels with parchment + torn overlay ===== */
+.markdown-section {
+  background: url("assets/textures/parchment.jpg") center/cover no-repeat;
+  border: 2px solid var(--eht-trim);
+  border-radius: 8px;
+  padding: 18px 22px;
+  box-shadow: inset 0 0 40px rgba(0,0,0,.5);
+  position: relative;
+  overflow: hidden;
+}
+.markdown-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: url("assets/textures/torn-frame.png") center/cover no-repeat;
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  border-radius: 8px;
+}
+
+/* ===== Headings ===== */
+.markdown-section h1,
+.markdown-section h2 {
+  font-family: 'VT323', ui-monospace, monospace;
+  color: var(--eht-gold);
+  text-shadow: 0 1px 0 #000;
+  margin-top: .4em;
+  margin-bottom: .4em;
+}
+.markdown-section h1 { font-size: 40px; }
+.markdown-section h2 { font-size: 32px; }
+
 /* ===== Theme toggle ===== */
 .theme-toggle {
   position: absolute;
@@ -145,6 +157,7 @@ a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
   <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
 
   <script>
+    /* ==================== Docsify config ==================== */
     window.$docsify = {
       name: 'EHT Companion Hub',
       loadSidebar: true,
@@ -167,6 +180,7 @@ a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
           }
 
           setTheme(currentTheme());
+
           btn.addEventListener('click', () => {
             const next = document.body.classList.contains('dark') ? 'light' : 'dark';
             setTheme(next);
@@ -174,13 +188,45 @@ a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
 
           hook.doneEach(function () {
             const host = document.querySelector('.sidebar .app-name');
-            if (host && btn && !host.contains(btn)) host.appendChild(btn);
+            if (host && btn && !host.contains(btn)) {
+              host.style.position = 'relative';
+              host.appendChild(btn);
+            }
+
+            // collapsible sections (Home stays open)
+            const nav = document.querySelector('.sidebar-nav');
+            if (!nav) return;
+            nav.querySelectorAll(':scope > ul > li').forEach(li => {
+              const sub = li.querySelector(':scope > ul');
+              const labelLink = li.querySelector(':scope > a');
+              const isHome = labelLink && /home/i.test(labelLink.textContent.trim());
+              if (!sub || isHome) {
+                if (isHome) li.classList.add('active');
+                return;
+              }
+              if (li.classList.contains('collapsible-ready')) return;
+              li.classList.add('collapsible','collapsible-ready');
+              const caret = document.createElement('span');
+              caret.className = 'collapser';
+              caret.textContent = '▸';
+              labelLink && labelLink.appendChild(caret);
+              sub.style.display = 'none';
+              labelLink.addEventListener('click', (e) => {
+                if (e.target === labelLink || e.target === caret) {
+                  e.preventDefault();
+                  const opened = sub.style.display !== 'none';
+                  sub.style.display = opened ? 'none' : '';
+                  caret.textContent = opened ? '▸' : '▾';
+                }
+              });
+            });
           });
         }
       ]
     };
   </script>
 
+  <!-- Docsify core + plugins -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
