@@ -5,109 +5,180 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EHT Companion Hub</title>
 
+  <!-- Docsify Themeable baseline -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 
   <style>
-/* ===== Global Layout ===== */
-body {
-  margin: 0;
-  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-  background: #0e1a20;
-  color: #e7efe9;
-  display: flex;
-}
+  /* ===== Semi-transparent Sidebar ===== */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    background:
+      rgba(255,255,255,0.85) url('assets/textures/parchment.jpg') center/cover no-repeat;
+    border-right: 2px solid #ceb089;
+    box-shadow: inset 0 0 40px rgba(0,0,0,.35);
+    padding: 10px;
+    backdrop-filter: blur(4px);
+    overflow-y: auto;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform .3s ease;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
 
-/* ===== Sidebar ===== */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 260px;
-  overflow-y: auto;
-  z-index: 10;
+  /* Sidebar toggle (hamburger) */
+  .sidebar-toggle {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    background: rgba(0,0,0,.4);
+    border: 2px solid #ceb089;
+    border-radius: 4px;
+    color: #e0c58f;
+    padding: 6px 10px;
+    cursor: pointer;
+    z-index: 1100;
+  }
 
-  /* Burnt parchment look */
-  background:
-    url('assets/textures/parchment.jpg') center/cover no-repeat,
-    #2a2a2a;
-  border: 2px solid #ceb089;
-  border-radius: 8px 0 0 8px; /* rounded only on left edge */
-  box-shadow: inset 0 0 40px rgba(0,0,0,.35), 4px 0 15px rgba(0,0,0,.4);
-  padding: 10px;
-}
+  /* Sidebar headings + links */
+  .sidebar .app-name {
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    font-weight: bold;
+    color: #e0c58f;
+    text-shadow: 0 1px 2px #000;
+    padding: 12px;
+    border-bottom: 2px solid #ceb089;
+  }
+  .sidebar-nav strong {
+    display: block;
+    margin: 12px 0 6px;
+    padding: 6px 10px;
+    font-size: 14px;
+    color: #e0c58f;
+    text-shadow: 0 0 6px rgba(0,0,0,.6);
+    border-bottom: 1px solid rgba(255,255,255,.1);
+  }
+  .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    margin: 2px 0;
+    border-radius: 4px;
+    color: #1a1a1a;
+    transition: background .2s ease, color .2s ease;
+  }
+  .sidebar-nav a:hover {
+    background: rgba(206,176,137,.25);
+    color: #000;
+    text-shadow: 0 0 4px rgba(255,216,107,.5);
+  }
 
-/* Sidebar section headers */
-.sidebar-nav strong {
-  display: block;
-  margin: 12px 0 6px;
-  padding: 6px 10px;
-  font-size: 14px;
-  color: #e0c58f;
-  text-shadow: 0 0 6px rgba(0,0,0,.6);
-  border-bottom: 1px solid rgba(255,255,255,.1);
-}
+  /* Sidebar icons */
+  .sidebar-nav img.icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    image-rendering: pixelated;
+  }
 
-/* Sidebar links */
-.sidebar-nav a {
-  display: flex;
-  align-items: center;
-  padding: 6px 10px;
-  margin: 2px 0;
-  border-radius: 4px;
-  color: #2c2c2c;
-  transition: background .2s ease, color .2s ease;
-}
-.sidebar-nav a:hover {
-  background: rgba(206,176,137,.25);
-  color: #000;
-  text-shadow: 0 0 4px rgba(255,216,107,.5);
-}
+  /* ===== Main Content Area ===== */
+  body {
+    margin: 0;
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+    background: #0f1a20;
+    color: #e7efe9;
+  }
+  .content {
+    margin-left: 0;
+    padding: 80px 20px 40px;
+    transition: margin-left .3s ease;
+  }
+  @media (min-width: 768px) {
+    .content { margin-left: 260px; }
+    .sidebar { transform: translateX(0); }
+    .sidebar-toggle { display: none; }
+  }
 
-/* ===== Main Content ===== */
-.content {
-  margin-left: 260px; /* same as sidebar width */
-  padding: 20px;
-  flex: 1;
-}
+  /* Burnt parchment content box */
+  .markdown-section {
+    background:
+      url('assets/textures/torn-frame.png') center/cover no-repeat,
+      #1a1a1a;
+    border: 2px solid #ceb089;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.5);
+  }
+  .markdown-section h1 {
+    font-size: 36px;
+    color: #e0c58f;
+    text-shadow: 0 1px 2px #000;
+  }
 
-/* Burnt parchment content box */
-.markdown-section {
-  background:
-    url('assets/textures/torn-frame.png') center/cover no-repeat,
-    #1a1a1a;
-  border: 2px solid #ceb089;
-  border-radius: 8px;
-  padding: 24px;
-  box-shadow: 0 6px 20px rgba(0,0,0,.5);
-  margin-top: 0;
-}
-
-.markdown-section h1 {
-  font-size: 36px;
-  color: #e0c58f;
-  text-shadow: 0 1px 2px #000;
-  margin: 0 0 10px 0;
-}
+  /* ===== Theme toggle ===== */
+  .theme-toggle {
+    position: fixed;
+    right: 16px;
+    top: 12px;
+    border: 2px solid #ceb089;
+    background: rgba(0,0,0,.3);
+    color: #e0c58f;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 1100;
+  }
+  .theme-toggle:hover { background: rgba(0,0,0,.5); }
   </style>
 </head>
 
 <body class="dark">
-  <div id="app" class="content">Loading EHT Companion Hub…</div>
+  <!-- Sidebar toggle button -->
+  <button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
 
-  <!-- Docsify core -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
+  <!-- Theme toggle -->
+  <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+
+  <div id="app">Loading EHT Companion Hub…</div>
 
   <script>
+    /* Docsify config */
     window.$docsify = {
       name: 'EHT Companion Hub',
       loadSidebar: true,
       subMaxLevel: 2,
       search: 'auto',
-      auto2top: true
+      auto2top: true,
+      alias: { '/README':'/README.md' },
+      plugins: [
+        function (hook, vm) {
+          const STORAGE_KEY = 'eht-theme';
+          const btn = document.getElementById('themeBtn');
+          function setTheme(mode){
+            document.body.classList.toggle('dark', mode === 'dark');
+            btn.textContent = mode === 'dark' ? '🌙' : '☀️';
+            localStorage.setItem(STORAGE_KEY, mode);
+          }
+          setTheme(localStorage.getItem(STORAGE_KEY) || 'dark');
+          btn.addEventListener('click', () => {
+            const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+            setTheme(next);
+          });
+        }
+      ]
     };
   </script>
+
+  <!-- Docsify core + plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
 </body>
 </html>
