@@ -213,6 +213,73 @@ body.dark .markdown-section th{
 body.dark .markdown-section blockquote{
   background: rgba(110,231,255,.10);
 }
+/* ===== EHT GAME SKIN ===================================== */
+/* Palette (tweak to taste) */
+:root{
+  --eht-bg:        #182629;   /* deep teal */
+  --eht-panel:     #1f2f33;   /* panel body */
+  --eht-panel-top: #2a3d42;   /* slight bevel */
+  --eht-border:    #0d1719;   /* dark inner edge */
+  --eht-trim:      #ceb089;   /* bronze-gold */
+  --eht-gold:      #e0c58f;
+  --eht-purple:    #7c4bb0;   /* shop accent */
+  --eht-ink:       #e7efe9;   /* main text */
+  --eht-ink-dim:   #b7c5bf;
+  --eht-link:      #9bd4ff;   /* cyan link */
+  --eht-link-2:    #ffd166;   /* hover gold */
+  --eht-shadow:    rgba(0,0,0,.5);
+}
+
+/* Optional 8-bit headline font (tiny & readable) */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+/* Body */
+body{
+  background: radial-gradient(1200px 900px at 30% -10%, #213538 0%, var(--eht-bg) 60%);
+  color: var(--eht-ink);
+  text-rendering: optimizeLegibility;
+}
+
+/* App title in sidebar */
+.app-name{
+  font-family: 'VT323', ui-monospace, monospace;
+  letter-spacing: .5px;
+  color: var(--eht-gold);
+  text-shadow: 0 1px 0 #000;
+}
+
+/* ===== Panels (content + sidebar) */
+.sidebar{
+  background:
+    linear-gradient(#2a3d42, #223438) padding-box,
+    linear-gradient(180deg, #f1e1c4, #8b6a3d 70%, #3e2c18) border-box;
+  border: 2px solid transparent;
+  box-shadow:
+    inset 0 1px 0 var(--eht-panel-top),
+    0 10px 24px -8px var(--eht-shadow);
+}
+
+.markdown-section{
+  background:
+    linear-gradient(#2a3d42, #1b2b2e) padding-box,
+    linear-gradient(180deg, #f1e1c4, #8b6a3d 70%, #3e2c18) border-box;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 18px 18px 22px;
+  box-shadow:
+    inset 0 1px 0 var(--eht-panel-top),
+    0 10px 26px -8px var(--eht-shadow);
+}
+
+/* Headings */
+.markdown-section h1,.markdown-section h2{
+  font-family: 'VT323', ui-monospace, monospace;
+  color: var(--eht-gold);
+  border-bottom: 0;
+  text-shadow: 0 1px 0 #000;
+}
+.markdown-section h1{ font-size: 40px; margin-top: 0; }
+.markdown-section h2{ font-size: 32px;
   </style>
 </head>
 
