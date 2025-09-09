@@ -9,147 +9,135 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 
   <style>
-  /* ===== Semi-transparent Sidebar ===== */
+  /* ===== Palette ===== */
+  :root {
+    --eht-trim: #ceb089;
+    --eht-gold: #e0c58f;
+    --eht-ink: #e7efe9;
+    --eht-ink-dim: #b7c5bf;
+    --eht-link: #9bd4ff;
+    --eht-link-2: #ffd166;
+    --eht-shadow: rgba(0,0,0,.5);
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+  /* ===== Base ===== */
+  body {
+    margin:0;
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+    background: #0f1b24;
+    color: var(--eht-ink);
+  }
+  a { color: var(--eht-link); text-decoration: none; }
+  a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
+
+  /* ===== Sidebar ===== */
   .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
     width: 260px;
-    background:
-      rgba(255,255,255,0.85) url('assets/textures/parchment.jpg') center/cover no-repeat;
-    border-right: 2px solid #ceb089;
-    box-shadow: inset 0 0 40px rgba(0,0,0,.35);
-    padding: 10px;
-    backdrop-filter: blur(4px);
-    overflow-y: auto;
-    z-index: 1000;
+    max-width: 80vw;
     transform: translateX(-100%);
     transition: transform .3s ease;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    z-index: 1000;
+    background: rgba(245,245,245,0.9) url('assets/textures/parchment.jpg');
+    background-size: cover;
+    border-right: 2px solid var(--eht-trim);
+    box-shadow: 4px 0 18px rgba(0,0,0,.5);
+    overflow-y: auto;
   }
   .sidebar.open {
     transform: translateX(0);
   }
-
-  /* Sidebar toggle (hamburger) */
-  .sidebar-toggle {
-    position: fixed;
-    top: 12px;
-    left: 12px;
-    background: rgba(0,0,0,.4);
-    border: 2px solid #ceb089;
-    border-radius: 4px;
-    color: #e0c58f;
-    padding: 6px 10px;
-    cursor: pointer;
-    z-index: 1100;
-  }
-
-  /* Sidebar headings + links */
   .sidebar .app-name {
     font-family: 'VT323', monospace;
-    font-size: 18px;
-    font-weight: bold;
-    color: #e0c58f;
+    font-size: 20px;
+    color: var(--eht-gold);
+    padding: 16px;
+    border-bottom: 2px solid var(--eht-trim);
     text-shadow: 0 1px 2px #000;
-    padding: 12px;
-    border-bottom: 2px solid #ceb089;
-  }
-  .sidebar-nav strong {
-    display: block;
-    margin: 12px 0 6px;
-    padding: 6px 10px;
-    font-size: 14px;
-    color: #e0c58f;
-    text-shadow: 0 0 6px rgba(0,0,0,.6);
-    border-bottom: 1px solid rgba(255,255,255,.1);
   }
   .sidebar-nav a {
     display: flex;
     align-items: center;
     padding: 6px 10px;
     margin: 2px 0;
+    color: var(--eht-ink-dim);
     border-radius: 4px;
-    color: #1a1a1a;
-    transition: background .2s ease, color .2s ease;
   }
   .sidebar-nav a:hover {
-    background: rgba(206,176,137,.25);
-    color: #000;
-    text-shadow: 0 0 4px rgba(255,216,107,.5);
+    color:#fff;
+    background: rgba(177,140,90,.25);
   }
-
-  /* Sidebar icons */
   .sidebar-nav img.icon {
-    width: 20px;
-    height: 20px;
+    width: 20px; height: 20px;
     margin-right: 6px;
     image-rendering: pixelated;
   }
 
-  /* ===== Main Content Area ===== */
-  body {
-    margin: 0;
-    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-    background: #0f1a20;
-    color: #e7efe9;
+  /* ===== Cover Plate (fixed at top) ===== */
+  .cover-main {
+    margin-top: 0;
+    text-align: center;
   }
-  .content {
-    margin-left: 0;
-    padding: 80px 20px 40px;
-    transition: margin-left .3s ease;
+  .cover-main h1 {
+    display:inline-block;
+    padding: 28px;
+    border: 2px solid var(--eht-trim);
+    border-radius: 8px;
+    background: rgba(0,0,0,0.65);
+    color: var(--eht-gold);
+    font-family: 'VT323', monospace;
+    font-size: 36px;
+    position: relative;
   }
-  @media (min-width: 768px) {
-    .content { margin-left: 260px; }
-    .sidebar { transform: translateX(0); }
-    .sidebar-toggle { display: none; }
+  /* Torn frame overlay behind text */
+  .cover-main h1::before {
+    content:"";
+    position:absolute;
+    inset:0;
+    background: url('assets/textures/torn-frame.png') no-repeat center/cover;
+    opacity:0.35;   /* subtle */
+    z-index:-1;
+    pointer-events:none;
   }
 
-  /* Burnt parchment content box */
+  /* ===== Content ===== */
   .markdown-section {
-    background:
-      url('assets/textures/torn-frame.png') center/cover no-repeat,
-      #1a1a1a;
-    border: 2px solid #ceb089;
+    max-width: 920px;
+    margin: 20px auto;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 8px;
-    padding: 24px;
-    box-shadow: 0 6px 20px rgba(0,0,0,.5);
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.35);
   }
-  .markdown-section h1 {
-    font-size: 36px;
-    color: #e0c58f;
-    text-shadow: 0 1px 2px #000;
+  .markdown-section h1, .markdown-section h2 {
+    font-family: 'VT323', monospace;
+    color: var(--eht-gold);
   }
 
   /* ===== Theme toggle ===== */
   .theme-toggle {
     position: fixed;
-    right: 16px;
-    top: 12px;
-    border: 2px solid #ceb089;
-    background: rgba(0,0,0,.3);
-    color: #e0c58f;
+    right: 12px; top: 12px;
+    border: 2px solid var(--eht-trim);
+    background: rgba(0,0,0,.5);
+    color: var(--eht-gold);
     border-radius: 6px;
     padding: 4px 10px;
-    font-size: 14px;
     cursor: pointer;
-    z-index: 1100;
+    z-index: 1200;
   }
-  .theme-toggle:hover { background: rgba(0,0,0,.5); }
   </style>
 </head>
 
-<body class="dark">
-  <!-- Sidebar toggle button -->
-  <button class="sidebar-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
-
-  <!-- Theme toggle -->
+<body>
+  <div id="app">Loading EHT Companion Hub…</div>
   <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
 
-  <div id="app">Loading EHT Companion Hub…</div>
-
   <script>
-    /* Docsify config */
     window.$docsify = {
       name: 'EHT Companion Hub',
       loadSidebar: true,
@@ -164,9 +152,12 @@
           function setTheme(mode){
             document.body.classList.toggle('dark', mode === 'dark');
             btn.textContent = mode === 'dark' ? '🌙' : '☀️';
-            localStorage.setItem(STORAGE_KEY, mode);
+            try { localStorage.setItem(STORAGE_KEY, mode); } catch(e){}
           }
-          setTheme(localStorage.getItem(STORAGE_KEY) || 'dark');
+          function currentTheme(){
+            try { return localStorage.getItem(STORAGE_KEY) || 'dark'; } catch(e){ return 'dark'; }
+          }
+          setTheme(currentTheme());
           btn.addEventListener('click', () => {
             const next = document.body.classList.contains('dark') ? 'light' : 'dark';
             setTheme(next);
