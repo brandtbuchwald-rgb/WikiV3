@@ -5,19 +5,31 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>EHT Companion Hub</title>
 
-    <!-- Docsify + Themeable (dark) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css" />
+    <!-- Themeable: we load both light & dark and switch via data-theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css" id="darkTheme">
+
     <style>
       :root { --theme-color:#3F51B5; }
-      .sidebar { width: 280px; }          /* roomier sidebar */
-      .sidebar-nav a { font-size: 15px; } /* clearer links   */
+      /* App chrome */
+      .app-nav { display:flex; align-items:center; gap:.5rem; padding:.5rem .75rem; }
+      .theme-toggle {
+        border:1px solid var(--mono-tint2); border-radius:8px; padding:.35rem .6rem;
+        font-size:.9rem; opacity:.9; background:transparent;
+      }
+      .sidebar { width:280px; }
+      .sidebar-nav a { font-size:15px; line-height:1.35; }
+      .sidebar .search input { border-radius:10px; }
+      /* Make the page title act like a “home” button */
+      .app-name-link { text-decoration:none !important; }
     </style>
   </head>
+
   <body>
     <div id="app">Loading EHT Companion Hub…</div>
 
     <script>
-      // Work reliably from a Pages subpath like /WikiV3/
+      // ---------- Router + base config (works from /WikiV3/) ----------
       const base = (location.pathname.replace(/\/index\.html$/, '/'));
       window.$docsify = {
         name: 'EHT Companion Hub',
@@ -28,11 +40,76 @@
         routerMode: 'hash',
         relativePath: true,
         basePath: base,
-        // Use the SAME _sidebar.md for all routes (fixes empty sidebar)
         alias: { '/.*/_sidebar.md': '/WikiV3/_sidebar.md', '/_sidebar.md': '/WikiV3/_sidebar.md' },
-        // Keep the top search bar small on mobile
-        auto2top: true
+        auto2top: true,
+        // Add a toolbar container for our toggle
+        plugins: [
+          function(hook, vm){
+            hook.beforeEach(function(content){
+              // no-op; keep for future preprocess
+              return content;
+            });
+            hook.afterEach(function(html, next){
+              // Inject nothing; theme toggle is global, not per-page
+              next(html);
+            });
+            hook.doneEach(function(){
+              // 1) Auto-close sidebar after tapping a link (mobile)
+              const sb = document.querySelector('body');
+              document.querySelectorAll('.sidebar-nav a').forEach(a=>{
+                a.addEventListener('click', ()=> {
+                  sb.classList.remove('close'); // ensure next open works
+                  sb.classList.add('close');    // docsify uses body.close to hide
+                }, { once:false });
+              });
+            });
+          }
+        ]
       };
+
+      // ---------- Theme toggle (persisted) ----------
+      const THEME_KEY = 'eht-theme';   // 'light' | 'dark'
+      const setTheme = (t) => {
+        document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+        localStorage.setItem(THEME_KEY, t);
+        // Switch dark stylesheet load state (keeps light as base)
+        document.getElementById('darkTheme').disabled = (t!=='dark') ? true : false;
+      };
+      const saved = localStorage.getItem(THEME_KEY) || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      setTheme(saved);
+
+      // Render a small top bar with the toggle
+      document.addEventListener('DOMContentLoaded', () => {
+        const bar = document.createElement('div');
+        bar.className = 'app-nav';
+        bar.innerHTML = `
+          <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">🌙 / ☀️</button>
+        `;
+        document.body.prepend(bar);
+        document.getElementById('themeBtn').onclick = () => setTheme(
+          (localStorage.getItem(THEME_KEY) === 'dark') ? 'light' : 'dark'
+        );
+      });
+
+      // ---------- Swipe from left edge to open sidebar ----------
+      (function enableSwipeOpen(){
+        let startX=null, startY=null;
+        const EDGE = 24; // px from left edge
+        window.addEventListener('touchstart', (e)=>{
+          const t = e.touches[0];
+          startX = t.clientX; startY = t.clientY;
+        }, {passive:true});
+        window.addEventListener('touchend', (e)=>{
+          if(startX===null) return;
+          const dx = (e.changedTouches[0].clientX - startX);
+          const dy = Math.abs(e.changedTouches[0].clientY - startY);
+          // horizontal swipe from very left edge
+          if(startX < EDGE && dx > 50 && dy < 40){
+            document.body.classList.remove('close');
+          }
+          startX = startY = null;
+        }, {passive:true});
+      })();
     </script>
 
     <!-- Docsify core + search plugin -->
