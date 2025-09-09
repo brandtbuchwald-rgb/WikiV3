@@ -9,361 +9,137 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 
   <style>
-    /* Sidebar icons */
-.sidebar-nav .icon {
-  width: 24px;
-  height: 24px;
-  vertical-align: middle;
-  margin-right: 6px;
-  transition: transform 0.15s ease, filter 0.15s ease;
-}
-
-/* Hover glow + slight scale up */
-.sidebar-nav a:hover .icon {
-  transform: scale(1.15);
-  filter: drop-shadow(0 0 6px rgba(255, 255, 150, 0.8));
-}
-    /* ---------- Design tokens ---------- */
-:root{
-  --accent: #6ee7ff;        /* primary accent */
-  --accent-2: #8b7cff;      /* secondary accent for blends */
-  --brand-ink: #cfe1ff;
-
-  --bg-light: #ffffff;
-  --ink-light: #1f2937;
-  --link-light: #1565c0;
-
-  --bg-dark: #0a1220;
-  --ink-dark: #e5e7eb;
-  --muted-dark: #9ca3af;
-
-  --sidebar-dark: #0c1626;
-  --sidebar-border: rgba(255,255,255,.08);
-
-  --card-light: rgba(255,255,255,.82);
-  --card-dark: rgba(16,26,40,.78);
-
-  --radius: 14px;
-  --shadow-1: 0 10px 30px rgba(0,0,0,.18);
-  --shadow-2: 0 24px 60px rgba(0,0,0,.28);
-}
-
-/* ---------- Page & global ---------- */
-*{ box-sizing: border-box; }
-html,body{ height:100%; }
-body{
-  margin:0;
-  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
-               Roboto, "Helvetica Neue", Arial, "Apple Color Emoji",
-               "Segoe UI Emoji";
-  line-height:1.6;
-  color: var(--ink-light);
-  background:
-    radial-gradient(1200px 600px at -15% -20%, #aef0ff26, transparent 60%),
-    radial-gradient(800px 500px at 110% 20%, #c1b5ff1f, transparent 55%),
-    linear-gradient(180deg, #f8fbff, #f3f7ff 40%, #eef2ff);
-  transition: background .25s ease, color .25s ease;
-}
-a{
-  color: var(--link-light);
-  text-decoration: none;
-  background-image: linear-gradient( to right, var(--accent), var(--accent-2) );
-  background-size: 0% 2px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size .25s ease, color .2s ease;
-}
-a:hover{ background-size: 100% 2px; }
-
-/* ---------- Content card ---------- */
-.content{ max-width: 920px; padding: 32px 28px 120px; }
-.markdown-section{
-  background: var(--card-light);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(0,0,0,.05);
-  border-radius: var(--radius);
-  padding: 32px;
-  box-shadow: var(--shadow-1);
-  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
-}
-.markdown-section:hover{
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-2);
-  border-color: rgba(0,0,0,.08);
-}
-
-/* ---------- Headings (gradient ink) ---------- */
-.markdown-section h1,
-.markdown-section h2{
-  font-weight: 800;
-  letter-spacing: .2px;
-  line-height: 1.2;
-  margin-top: .2em;
-  margin-bottom: .4em;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.markdown-section h3{ font-weight: 700; }
-
-/* ---------- Lists, tables, code ---------- */
-.markdown-section ul>li::marker{ color: var(--accent); }
-.markdown-section table{
-  width:100%; border-collapse: collapse; overflow: hidden;
-  border-radius: 10px; box-shadow: var(--shadow-1);
-}
-.markdown-section th, .markdown-section td{
-  padding: 10px 12px; border-bottom: 1px solid rgba(0,0,0,.08);
-}
-.markdown-section th{
-  background: linear-gradient(180deg, #f7fbff, #eef6ff);
-  text-align:left;
-}
-.markdown-section code{
-  background: rgba(0,0,0,.06);
-  padding: .12em .4em; border-radius: 6px;
-}
-
-/* ---------- Sidebar polish ---------- */
-.sidebar{
-  background:
-    radial-gradient(1000px 500px at -160px -120px, #69d7ff22, transparent 60%),
-    linear-gradient(180deg, #0f1b2a 0%, #0b1420 100%);
-  border-right: 1px solid var(--sidebar-border);
-}
-.sidebar .app-name{
-  position: relative;
-  padding: 20px 18px 14px;
-  border-bottom: 1px solid var(--sidebar-border);
-  background: linear-gradient(180deg, rgba(255,255,255,.04), transparent);
-}
-.sidebar .app-name a{
-  color: var(--brand-ink);
-  font-weight: 800; letter-spacing:.3px;
-  text-shadow: 0 2px 18px rgba(110,231,255,.16);
-}
-.search{ padding: 12px 16px; border-bottom:1px solid var(--sidebar-border); }
-input[type="search"]{
-  border-radius: 12px !important;
-  border: 1px solid rgba(255,255,255,.12) !important;
-  background: rgba(255,255,255,.06) !important;
-  color: #dbe7ff !important;
-  padding: 10px 12px !important;
-}
-.sidebar-nav{ padding: 16px 10px 28px; }
-.sidebar-nav a{
-  color:#cfd8dc; border-radius: 10px; padding: 9px 12px; display:block;
-  transition: background .18s ease, box-shadow .18s ease, transform .06s ease;
-}
-.sidebar-nav a:hover{
-  background: rgba(255,255,255,.07);
-  color:#fff; box-shadow: 0 10px 20px rgba(0,0,0,.18);
-}
-.sidebar-nav li.active > a{
-  background: linear-gradient(90deg, rgba(110,231,255,.18), rgba(139,124,255,.18));
-  color:#fff;
-  box-shadow: inset 0 0 0 1px rgba(110,231,255,.35);
-  position: relative;
-}
-.sidebar-nav li.active > a::before{
-  content:"";
-  position:absolute; left:-8px; top:8px; bottom:8px; width:3px;
-  background: linear-gradient(180deg, var(--accent), var(--accent-2));
-  border-radius: 6px;
-}
-.sidebar-nav a:hover{
-  color:#fff;
-  text-shadow:
-    0 0 6px rgba(255,216,107,.55),
-    0 0 16px rgba(155,125,245,.35);
-}
-/* caret for collapsibles (Docsify plugin adds .collapser span) */
-.sidebar-nav li.collapsible > .collapser{
-  float:right; opacity:.8; transform: translateY(2px);
-  font-size: 13px; user-select:none; cursor:pointer;
-}
-/* Sidebar icons - consistent size */
-.sidebar-nav img.icon {
-  width: 10px;     /* uniform width */
-  height: 10px;    /* uniform height */
-  object-fit: contain; /* keeps pixel art sharp */
-  vertical-align: middle;
-  margin-right: 8px;
-}
-/* ---------- Theme toggle (button is moved into app-name by JS) ---------- */
-.theme-toggle{
-  position:absolute; right:12px; top:10px;
-  border:1px solid rgba(255,255,255,.18);
-  background: rgba(255,255,255,.10);
-  color:#fff; border-radius: 999px;
-  padding:6px 10px; font-size:15px; line-height:1;
-  backdrop-filter: blur(4px);
-  cursor:pointer; transition: background .2s ease, transform .05s ease;
-}
-.theme-toggle:hover{ background: rgba(255,255,255,.18); }
-.theme-toggle:active{ transform: translateY(1px); }
-
-/* ---------- Dark mode overrides ---------- */
-body.dark{
-  color: var(--ink-dark);
-  background:
-    radial-gradient(1400px 700px at -20% -15%, #56c6ff1c, transparent 60%),
-    radial-gradient(900px 600px at 115% -10%, #7c6cff1a, transparent 55%),
-    linear-gradient(180deg, #0a1220, #0a1422 55%, #0b1625);
-}
-body.dark a{ color: #a7c4ff; }
-body.dark .markdown-section{
-  background: var(--card-dark);
-  border: 1px solid rgba(255,255,255,.06);
-}
-body.dark .markdown-section code{ background: rgba(255,255,255,.08); }
-body.dark .markdown-section th{
-  background: linear-gradient(180deg, #0f1e33, #0d1a2b);
-}
-::-webkit-scrollbar{ width:10px; height:10px; }
-::-webkit-scrollbar-thumb{
-  background: rgba(255,255,255,.18);
-  border-radius: 20px; border: 2px solid transparent;
-  background-clip: padding-box;
-}
-
-/* ---------- Callouts (use > quotes in markdown) ---------- */
-.markdown-section blockquote{
-  margin: 1rem 0; padding: 12px 16px;
-  border-left: 4px solid var(--accent);
-  background: rgba(110,231,255,.08);
-  border-radius: 8px;
-}
-body.dark .markdown-section blockquote{
-  background: rgba(110,231,255,.10);
-}
-/* ===== EHT GAME SKIN ===================================== */
-/* Palette (tweak to taste) */
-:root{
-  --eht-bg:        #182629;   /* deep teal */
-  --eht-panel:     #1f2f33;   /* panel body */
-  --eht-panel-top: #2a3d42;   /* slight bevel */
-  --eht-border:    #0d1719;   /* dark inner edge */
-  --eht-trim:      #ceb089;   /* bronze-gold */
+/* ===== EHT Palette ===== */
+:root {
+  --eht-bg:        #182629;
+  --eht-panel:     #1f2f33;
+  --eht-trim:      #ceb089;
   --eht-gold:      #e0c58f;
-  --eht-purple:    #7c4bb0;   /* shop accent */
-  --eht-ink:       #e7efe9;   /* main text */
+  --eht-purple:    #7c4bb0;
+  --eht-ink:       #e7efe9;
   --eht-ink-dim:   #b7c5bf;
-  --eht-link:      #9bd4ff;   /* cyan link */
-  --eht-link-2:    #ffd166;   /* hover gold */
+  --eht-link:      #9bd4ff;
+  --eht-link-2:    #ffd166;
   --eht-shadow:    rgba(0,0,0,.5);
 }
 
-/* Optional 8-bit headline font (tiny & readable) */
+/* Pixel-style font for headings */
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-/* Body */
-body{
+/* ===== Global ===== */
+body {
+  margin:0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
   background: radial-gradient(1200px 900px at 30% -10%, #213538 0%, var(--eht-bg) 60%);
   color: var(--eht-ink);
-  text-rendering: optimizeLegibility;
 }
+a { color: var(--eht-link); text-decoration: none; }
+a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
 
-/* App title in sidebar */
-.app-name{
-  font-family: 'VT323', ui-monospace, monospace;
-  letter-spacing: .5px;
-  color: var(--eht-gold);
-  text-shadow: 0 1px 0 #000;
-}
-
-/* ===== Panels (content + sidebar) */
-.sidebar{
-  background:
-    linear-gradient(#2a3d42, #223438) padding-box,
-    linear-gradient(180deg, #f1e1c4, #8b6a3d 70%, #3e2c18) border-box;
-  border: 2px solid transparent;
-  box-shadow:
-    inset 0 1px 0 var(--eht-panel-top),
-    0 10px 24px -8px var(--eht-shadow);
-}
-
-.markdown-section{
-  background:
-    linear-gradient(#2a3d42, #1b2b2e) padding-box,
-    linear-gradient(180deg, #f1e1c4, #8b6a3d 70%, #3e2c18) border-box;
+/* ===== Content area ===== */
+.markdown-section {
+  background: linear-gradient(#2a3d42, #1b2b2e) padding-box,
+              linear-gradient(180deg, #f1e1c4, #8b6a3d 70%, #3e2c18) border-box;
   border: 2px solid transparent;
   border-radius: 8px;
-  padding: 18px 18px 22px;
-  box-shadow:
-    inset 0 1px 0 var(--eht-panel-top),
-    0 10px 26px -8px var(--eht-shadow);
+  padding: 18px 22px;
+  box-shadow: inset 0 1px 0 #2a3d42, 0 10px 26px -8px var(--eht-shadow);
 }
-
-/* Headings */
-.markdown-section h1,.markdown-section h2{
+.markdown-section h1,
+.markdown-section h2 {
   font-family: 'VT323', ui-monospace, monospace;
   color: var(--eht-gold);
-  border-bottom: 0;
   text-shadow: 0 1px 0 #000;
+  margin-top: .4em;
+  margin-bottom: .4em;
 }
-.markdown-section h1{ font-size: 40px; margin-top: 0; }
-.markdown-section h2{ font-size: 32px;
-  /* ===== EHT UI bits ===== */
-:root{
-  --eht-gold:#e8cc87;
-  --eht-deep:#1b1f27;
-  --eht-accent:#9b7df5;   /* subtle purple like in shop */
-  --eht-glow:#ffd86b;
-}
+.markdown-section h1 { font-size: 40px; }
+.markdown-section h2 { font-size: 32px; }
 
-/* Pixel icons */
-.icon {
-  width: 18px;
-  height: 18px;
-  vertical-align: -3px;
-  image-rendering: pixelated;
-  margin-right: 6px;
-}
-
-/* Put a tiny fairybox badge before the site name */
-.app-name a{
-  position: relative;
-  padding-left: 26px;
-}
-.app-name a::before{
-  content:"";
-  position:absolute; left:0; top:50%; transform:translateY(-50%);
-  width:20px;height:20px; image-rendering:pixelated;
-  background:url('assets/icons/Fairybox.png') no-repeat center/contain;
-  filter: drop-shadow(0 0 6px rgba(255,216,107,.55));
-}
-
-/* Sidebar polish */
+/* ===== Sidebar (parchment + trim) ===== */
 .sidebar {
-  background: #111a22;                /* dark panel */
-  border-right: 1px solid rgba(255,255,255,.06);
+  background:
+    linear-gradient(rgba(255,255,255,.7), rgba(255,255,255,.7)),
+    url('assets/textures/parchment.png');
+  background-size: 256px 256px;
+  border: 3px solid var(--eht-trim);
+  border-radius: 6px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+  position: relative;
+  overflow: hidden;
 }
-.sidebar-nav a{
-  color:#cfd8dc;
+.sidebar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 40px rgba(0,0,0,.25);
+  border-radius: 6px;
 }
-.sidebar-nav a:hover{
-  color:#fff;
-  text-shadow: 0 0 8px rgba(255,216,107,.35);
+.sidebar .app-name {
+  font-family: 'VT323', ui-monospace, monospace;
+  font-size: 18px;
+  color: var(--eht-gold);
+  padding: 16px;
+  border-bottom: 2px solid var(--eht-trim);
+  text-shadow: 0 1px 2px #000;
+}
+.sidebar-nav { padding: 12px; }
+.sidebar-nav strong {
+  display: block;
+  margin: 12px 0 6px;
+  padding: 4px 8px;
+  font-size: 14px;
+  color: var(--eht-gold);
+  background: linear-gradient(#3b3b3b, #2a2a2a);
+  border: 2px solid var(--eht-trim);
+  border-radius: 4px;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(155,125,245,.35);
+}
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  margin: 2px 0;
+  color: var(--eht-ink-dim);
+  border-radius: 4px;
+  transition: background .2s, color .2s, text-shadow .2s;
+}
+.sidebar-nav a:hover {
+  color: #fff;
+  background: rgba(177,140,90,.25);
+  text-shadow: 0 0 6px rgba(255,216,107,.55),
+               0 0 12px rgba(155,125,245,.35);
 }
 
-/* Section headers in the sidebar */
-.sidebar-nav strong{
-  display:block;
-  padding:10px 12px 6px;
-  color:var(--eht-gold);
-  text-shadow:0 0 6px rgba(155,125,245,.35);
-  border-bottom:1px solid rgba(255,255,255,.06);
-  margin-top:8px;
+/* ===== Icons ===== */
+.sidebar-nav img.icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 6px;
+  image-rendering: pixelated;
+  transition: transform .15s ease, filter .15s ease;
+}
+.sidebar-nav a:hover img.icon {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 150, 0.8));
 }
 
-/* Light mode tweaks */
-body:not(.dark) .sidebar{ background:#f5f5f5; }
-body:not(.dark) .sidebar-nav a{ color:#222; }
-body:not(.dark) .sidebar-nav a:hover{ text-shadow:none; color:#1565c0; }
-  </style>
+/* ===== Theme toggle ===== */
+.theme-toggle {
+  position: absolute;
+  right: 12px; top: 12px;
+  border: 2px solid var(--eht-trim);
+  background: rgba(0,0,0,.3);
+  color: var(--eht-gold);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.theme-toggle:hover { background: rgba(0,0,0,.5); }
+</style>
 </head>
 
 <!-- Start in dark mode; JS will adjust if a saved preference exists -->
