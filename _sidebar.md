@@ -1,19 +1,16 @@
-- Getting Started
-  - [Home](/)
+- **Tools**
+  - [Attack Speed Calculator](items.html)
+  - [Items Database](items.html)
 
-- Equipment (Tables)
-  - [Unique Equipment](/wiki/equip-unique.md)
-  - [Accessories (Necklaces & Rings)](/wiki/equip-accessories.md)
-  - [World Boss Weapons](/wiki/equip-worldboss.md)
-  - [Chaos Gear](/wiki/equip-chaos.md)
-  - [Arena Gear](/wiki/equip-arena.md)
+- **Equipment**
+  - [Unique Gear](equip-unique.md)
+  - [Accessories](equip-accessories.md)
+  - [World Boss Weapons](equip-worldboss.md)
+  - [Chaos Gear](equip-chaos.md)
+  - [Arena Gear](equip-arena.md)
 
-- Tools
-  - [ATK SPD Calculator](/tools/atkspd/index.html)
-  - [Items Database](/tools/items.html)
+- **Skills**
+  - [Unique Skill Effects](skills.md)
 
-- Skills
-  - [Unique Skill Effects](/wiki/skills.md)
-
-- About
-  - [Disclaimer](/wiki/about.md)
+- **About**
+  - [Project Info](about.md)
