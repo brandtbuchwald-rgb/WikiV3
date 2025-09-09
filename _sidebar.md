@@ -3,7 +3,7 @@
 
 - **Tools**
    [<img class="icon" src="assets/icons/Sword.png"> ATK SPD Calculator](items.html)
-  - [<img class="icon" src="assets/icons/book.png"> Items Database](items.html)
+- [<img class="icon" src="assets/icons/book.png"> Items Database](items.html)
 
 - **Equipment**
   - <img class="icon" src="assets/icons/Chaoschest.png"> [Unique Gear](equip-unique.md)
