@@ -1,19 +1,19 @@
 - **Home**
-  - [EHT Companion Hub](README.md)
+  - <img class="icon" src="assets/icons/Fairybox.png"> [EHT Companion Hub](README.md)
 
 - **Tools**
-  - [Items Database](items.html)
-  - [ATK SPD Calculator](items.html) <!-- replace with your calc page later -->
+  - <img class="icon" src="assets/icons/Sword.png"> [ATK SPD Calculator](items.html)
+  - <img class="icon" src="assets/icons/book.png"> [Items Database](items.html)
 
 - **Equipment**
-  - [Unique Gear](equip-unique.md)
-  - [Accessories (Necklaces & Rings)](equip-accessories.md)
-  - [World Boss Weapons](equip-worldboss.md)
-  - [Chaos Gear](equip-chaos.md)
-  - [Arena Gear](equip-arena.md)
+  - <img class="icon" src="assets/icons/Chaoschest.png"> [Unique Gear](equip-unique.md)
+  - <img class="icon" src="assets/icons/chaosgolem.png"> [World Boss Weapons](equip-worldboss.md)
+  - <img class="icon" src="assets/icons/Excalibur.png"> [Arena Gear](equip-arena.md)
+  - <img class="icon" src="assets/icons/Generate.png"> [Chaos Gear](equip-chaos.md)
+  - <img class="icon" src="assets/icons/Dropscroll.png"> [Accessories (Necklaces & Rings)](equip-accessories.md)
 
 - **Skills**
-  - [Unique Skill Effects](skills.md)
+  - <img class="icon" src="assets/icons/Scroll.png"> [Unique Skill Effects](skills.md)
 
 - **About**
-  - [Project Info](about.md)
+  - <img class="icon" src="assets/icons/Egg.png"> [Project Info](about.md)
