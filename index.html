@@ -5,10 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EHT Companion Hub</title>
 
-  <!-- Docsify Themeable CSS (baseline layout + sidebar support) -->
+  <!-- Docsify Themeable CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 
   <style>
+/* ===== Reset Docsify layout issues ===== */
+#app {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;            /* full viewport height */
+  overflow: hidden;
+}
+.sidebar {
+  flex: 0 0 280px;          /* fixed width for sidebar */
+  max-width: 280px;
+  height: 100%;
+  overflow-y: auto;
+}
+.content {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 20px;
+}
+
 /* ===== EHT Palette ===== */
 :root {
   --eht-bg:        #182629;
@@ -21,10 +40,9 @@
   --eht-shadow:    rgba(0,0,0,.5);
 }
 
-/* Pixel-style font for headings */
+/* Pixel-style font */
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-/* ===== Global ===== */
 body {
   margin:0;
   font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
@@ -34,14 +52,13 @@ body {
 a { color: var(--eht-link); text-decoration: none; }
 a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
 
-/* ===== Sidebar (parchment + torn overlay) ===== */
+/* ===== Sidebar parchment + torn frame ===== */
 .sidebar {
   background: url("assets/textures/parchment.jpg") center/cover no-repeat;
   border: 3px solid var(--eht-trim);
   border-radius: 6px;
   box-shadow: 0 0 15px rgba(0,0,0,0.7);
   position: relative;
-  overflow: hidden;
 }
 .sidebar::after {
   content: "";
@@ -103,7 +120,7 @@ a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
   filter: drop-shadow(0 0 6px rgba(255, 255, 150, 0.8));
 }
 
-/* ===== Content panels with parchment + torn overlay ===== */
+/* ===== Content parchment ===== */
 .markdown-section {
   background: url("assets/textures/parchment.jpg") center/cover no-repeat;
   border: 2px solid var(--eht-trim);
@@ -157,7 +174,7 @@ a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
   <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
 
   <script>
-    /* ==================== Docsify config ==================== */
+    /* Docsify config */
     window.$docsify = {
       name: 'EHT Companion Hub',
       loadSidebar: true,
@@ -178,7 +195,6 @@ a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
           function currentTheme(){
             try { return localStorage.getItem(STORAGE_KEY) || 'dark'; } catch(e){ return 'dark'; }
           }
-
           setTheme(currentTheme());
 
           btn.addEventListener('click', () => {
@@ -192,41 +208,13 @@ a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
               host.style.position = 'relative';
               host.appendChild(btn);
             }
-
-            // collapsible sections (Home stays open)
-            const nav = document.querySelector('.sidebar-nav');
-            if (!nav) return;
-            nav.querySelectorAll(':scope > ul > li').forEach(li => {
-              const sub = li.querySelector(':scope > ul');
-              const labelLink = li.querySelector(':scope > a');
-              const isHome = labelLink && /home/i.test(labelLink.textContent.trim());
-              if (!sub || isHome) {
-                if (isHome) li.classList.add('active');
-                return;
-              }
-              if (li.classList.contains('collapsible-ready')) return;
-              li.classList.add('collapsible','collapsible-ready');
-              const caret = document.createElement('span');
-              caret.className = 'collapser';
-              caret.textContent = '▸';
-              labelLink && labelLink.appendChild(caret);
-              sub.style.display = 'none';
-              labelLink.addEventListener('click', (e) => {
-                if (e.target === labelLink || e.target === caret) {
-                  e.preventDefault();
-                  const opened = sub.style.display !== 'none';
-                  sub.style.display = opened ? 'none' : '';
-                  caret.textContent = opened ? '▸' : '▾';
-                }
-              });
-            });
           });
         }
       ]
     };
   </script>
 
-  <!-- Docsify core + plugins -->
+  <!-- Docsify -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
