@@ -10,142 +10,209 @@
 
   <style>
     /* ---------- Design tokens ---------- */
-    :root{
-      --brand-1: #3f51b5;
-      --brand-2: #7c8cff;
-      --ink-1: #0f172a;
-      --ink-2: #1f2937;
+:root{
+  --accent: #6ee7ff;        /* primary accent */
+  --accent-2: #8b7cff;      /* secondary accent for blends */
+  --brand-ink: #cfe1ff;
 
-      --bg-light: #ffffff;
-      --ink-light: #222;
-      --link-light: #1565c0;
+  --bg-light: #ffffff;
+  --ink-light: #1f2937;
+  --link-light: #1565c0;
 
-      --bg-dark: #111827;     /* page */
-      --ink-dark: #e5e7eb;    /* text */
-      --muted-dark: #9ca3af;  /* subtle text */
-      --link-dark: #9db5ff;
+  --bg-dark: #0a1220;
+  --ink-dark: #e5e7eb;
+  --muted-dark: #9ca3af;
 
-      --sidebar-dark: #0e1620;
-      --sidebar-border: rgba(255,255,255,.06);
-      --card-light: #f5f5f5;
-      --card-dark: #0f1a26;
-      --accent: #48b3ff;
-      --radius: 12px;
-      --shadow: 0 10px 30px rgba(0,0,0,.18);
-    }
+  --sidebar-dark: #0c1626;
+  --sidebar-border: rgba(255,255,255,.08);
 
-    /* ---------- Page + typography ---------- */
-    body{
-      margin:0;
-      background: var(--bg-light);
-      color: var(--ink-light);
-      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, "Helvetica Neue", Arial, "Apple Color Emoji",
-                   "Segoe UI Emoji";
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      transition: background .25s ease, color .25s ease;
-    }
-    a{ color: var(--link-light); text-decoration: none; }
-    a:hover{ text-decoration: underline; }
+  --card-light: rgba(255,255,255,.82);
+  --card-dark: rgba(16,26,40,.78);
 
-    /* ---------- Docsify containers polish ---------- */
-    .content{
-      max-width: 860px;
-      padding: 28px 24px 96px;
-    }
-    .markdown-section{
-      background: var(--card-light);
-      border-radius: var(--radius);
-      padding: 28px;
-      box-shadow: var(--shadow);
-    }
+  --radius: 14px;
+  --shadow-1: 0 10px 30px rgba(0,0,0,.18);
+  --shadow-2: 0 24px 60px rgba(0,0,0,.28);
+}
 
-    /* ---------- Sidebar look ---------- */
-    .sidebar{
-      background:
-        radial-gradient(1200px 600px at -200px -150px, rgba(72,179,255,.14), transparent 60%),
-        linear-gradient(180deg, #0f1b2a 0%, #0b1420 100%);
-      border-right: 1px solid var(--sidebar-border);
-    }
-    .sidebar .app-name{
-      padding: 18px 18px 12px;
-      border-bottom: 1px solid var(--sidebar-border);
-      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent);
-      position: relative;
-    }
-    .sidebar .app-name a{
-      color: #cfe1ff;
-      font-weight: 700;
-      letter-spacing: .2px;
-    }
+/* ---------- Page & global ---------- */
+*{ box-sizing: border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, "Apple Color Emoji",
+               "Segoe UI Emoji";
+  line-height:1.6;
+  color: var(--ink-light);
+  background:
+    radial-gradient(1200px 600px at -15% -20%, #aef0ff26, transparent 60%),
+    radial-gradient(800px 500px at 110% 20%, #c1b5ff1f, transparent 55%),
+    linear-gradient(180deg, #f8fbff, #f3f7ff 40%, #eef2ff);
+  transition: background .25s ease, color .25s ease;
+}
+a{
+  color: var(--link-light);
+  text-decoration: none;
+  background-image: linear-gradient( to right, var(--accent), var(--accent-2) );
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size .25s ease, color .2s ease;
+}
+a:hover{ background-size: 100% 2px; }
 
-    .search{
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--sidebar-border);
-    }
-    input[type="search"]{
-      border-radius: 10px !important;
-      border: 1px solid rgba(255,255,255,.08) !important;
-      background: rgba(255,255,255,.06) !important;
-      color: #cfd8dc !important;
-    }
+/* ---------- Content card ---------- */
+.content{ max-width: 920px; padding: 32px 28px 120px; }
+.markdown-section{
+  background: var(--card-light);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(0,0,0,.05);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: var(--shadow-1);
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.markdown-section:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+  border-color: rgba(0,0,0,.08);
+}
 
-    .sidebar-nav{ padding: 14px 10px 28px;}
-    .sidebar-nav a{
-      color:#cfd8dc;
-      border-radius: 8px;
-      padding: 8px 10px;
-      display:block;
-    }
-    .sidebar-nav a:hover{
-      background: rgba(255,255,255,.06);
-      color:#fff;
-    }
-    .sidebar-nav li.active > a{
-      background: rgba(72,179,255,.18);
-      color: #fff;
-      box-shadow: inset 0 0 0 1px rgba(72,179,255,.3);
-    }
+/* ---------- Headings (gradient ink) ---------- */
+.markdown-section h1,
+.markdown-section h2{
+  font-weight: 800;
+  letter-spacing: .2px;
+  line-height: 1.2;
+  margin-top: .2em;
+  margin-bottom: .4em;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.markdown-section h3{ font-weight: 700; }
 
-    /* Collapsible carets */
-    .sidebar-nav li.collapsible > .collapser{
-      float:right; opacity:.7; transform: translateY(2px);
-      font-size: 13px; user-select:none; cursor:pointer;
-    }
+/* ---------- Lists, tables, code ---------- */
+.markdown-section ul>li::marker{ color: var(--accent); }
+.markdown-section table{
+  width:100%; border-collapse: collapse; overflow: hidden;
+  border-radius: 10px; box-shadow: var(--shadow-1);
+}
+.markdown-section th, .markdown-section td{
+  padding: 10px 12px; border-bottom: 1px solid rgba(0,0,0,.08);
+}
+.markdown-section th{
+  background: linear-gradient(180deg, #f7fbff, #eef6ff);
+  text-align:left;
+}
+.markdown-section code{
+  background: rgba(0,0,0,.06);
+  padding: .12em .4em; border-radius: 6px;
+}
 
-    /* ---------- Theme toggle button ---------- */
-    .theme-toggle{
-      position:absolute; right:12px; top:10px;
-      border:1px solid rgba(255,255,255,.15);
-      background:rgba(255,255,255,.08);
-      color:#fff; border-radius: 999px;
-      padding:6px 10px; font-size:15px; line-height:1;
-      backdrop-filter: blur(4px);
-      cursor:pointer;
-      transition: background .2s ease, transform .05s ease;
-    }
-    .theme-toggle:active{ transform: translateY(1px); }
-    .theme-toggle:hover{ background: rgba(255,255,255,.16); }
+/* ---------- Sidebar polish ---------- */
+.sidebar{
+  background:
+    radial-gradient(1000px 500px at -160px -120px, #69d7ff22, transparent 60%),
+    linear-gradient(180deg, #0f1b2a 0%, #0b1420 100%);
+  border-right: 1px solid var(--sidebar-border);
+}
+.sidebar .app-name{
+  position: relative;
+  padding: 20px 18px 14px;
+  border-bottom: 1px solid var(--sidebar-border);
+  background: linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+}
+.sidebar .app-name a{
+  color: var(--brand-ink);
+  font-weight: 800; letter-spacing:.3px;
+  text-shadow: 0 2px 18px rgba(110,231,255,.16);
+}
+.search{ padding: 12px 16px; border-bottom:1px solid var(--sidebar-border); }
+input[type="search"]{
+  border-radius: 12px !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  background: rgba(255,255,255,.06) !important;
+  color: #dbe7ff !important;
+  padding: 10px 12px !important;
+}
+.sidebar-nav{ padding: 16px 10px 28px; }
+.sidebar-nav a{
+  color:#cfd8dc; border-radius: 10px; padding: 9px 12px; display:block;
+  transition: background .18s ease, box-shadow .18s ease, transform .06s ease;
+}
+.sidebar-nav a:hover{
+  background: rgba(255,255,255,.07);
+  color:#fff; box-shadow: 0 10px 20px rgba(0,0,0,.18);
+}
+.sidebar-nav li.active > a{
+  background: linear-gradient(90deg, rgba(110,231,255,.18), rgba(139,124,255,.18));
+  color:#fff;
+  box-shadow: inset 0 0 0 1px rgba(110,231,255,.35);
+  position: relative;
+}
+.sidebar-nav li.active > a::before{
+  content:"";
+  position:absolute; left:-8px; top:8px; bottom:8px; width:3px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  border-radius: 6px;
+}
 
-    /* ---------- Dark theme overrides ---------- */
-    body.dark{
-      background: var(--bg-dark);
-      color: var(--ink-dark);
-    }
-    body.dark a{ color: var(--link-dark); }
-    body.dark .markdown-section{ background: var(--card-dark); }
-    body.dark .content code{ background: rgba(255,255,255,.06); }
+/* caret for collapsibles (Docsify plugin adds .collapser span) */
+.sidebar-nav li.collapsible > .collapser{
+  float:right; opacity:.8; transform: translateY(2px);
+  font-size: 13px; user-select:none; cursor:pointer;
+}
 
-    /* scrollbars (WebKit) */
-    ::-webkit-scrollbar{ width:10px; height:10px; }
-    ::-webkit-scrollbar-thumb{
-      background: rgba(255,255,255,.18);
-      border-radius: 20px;
-      border: 2px solid transparent;
-      background-clip: padding-box;
-    }
+/* ---------- Theme toggle (button is moved into app-name by JS) ---------- */
+.theme-toggle{
+  position:absolute; right:12px; top:10px;
+  border:1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.10);
+  color:#fff; border-radius: 999px;
+  padding:6px 10px; font-size:15px; line-height:1;
+  backdrop-filter: blur(4px);
+  cursor:pointer; transition: background .2s ease, transform .05s ease;
+}
+.theme-toggle:hover{ background: rgba(255,255,255,.18); }
+.theme-toggle:active{ transform: translateY(1px); }
+
+/* ---------- Dark mode overrides ---------- */
+body.dark{
+  color: var(--ink-dark);
+  background:
+    radial-gradient(1400px 700px at -20% -15%, #56c6ff1c, transparent 60%),
+    radial-gradient(900px 600px at 115% -10%, #7c6cff1a, transparent 55%),
+    linear-gradient(180deg, #0a1220, #0a1422 55%, #0b1625);
+}
+body.dark a{ color: #a7c4ff; }
+body.dark .markdown-section{
+  background: var(--card-dark);
+  border: 1px solid rgba(255,255,255,.06);
+}
+body.dark .markdown-section code{ background: rgba(255,255,255,.08); }
+body.dark .markdown-section th{
+  background: linear-gradient(180deg, #0f1e33, #0d1a2b);
+}
+::-webkit-scrollbar{ width:10px; height:10px; }
+::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.18);
+  border-radius: 20px; border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* ---------- Callouts (use > quotes in markdown) ---------- */
+.markdown-section blockquote{
+  margin: 1rem 0; padding: 12px 16px;
+  border-left: 4px solid var(--accent);
+  background: rgba(110,231,255,.08);
+  border-radius: 8px;
+}
+body.dark .markdown-section blockquote{
+  background: rgba(110,231,255,.10);
+}
   </style>
 </head>
 
