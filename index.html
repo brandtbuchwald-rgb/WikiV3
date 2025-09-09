@@ -5,19 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EHT Companion Hub</title>
 
-  <!-- Docsify Themeable CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 
   <style>
   :root {
     --eht-bg: #182629;
-    --eht-panel: rgba(31,47,51,0.9);
     --eht-trim: #ceb089;
     --eht-gold: #e0c58f;
     --eht-ink: #e7efe9;
     --eht-link: #9bd4ff;
     --eht-link-2: #ffd166;
-    --eht-shadow: rgba(0,0,0,.5);
   }
 
   body {
@@ -26,42 +23,64 @@
     background: radial-gradient(1200px 900px at 30% -10%, #213538 0%, var(--eht-bg) 60%);
     color: var(--eht-ink);
   }
-  a { color: var(--eht-link); text-decoration: none; }
-  a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
 
-  /* === Main content card === */
-  .content {
-    padding: 20px;
-  }
+  a { color: var(--eht-link); text-decoration: none; }
+  a:hover { color: var(--eht-link-2); }
+
+  /* Main content card */
   .markdown-section {
-    background: rgba(24, 38, 41, 0.85);
+    background: rgba(24,38,41,.85);
     border: 2px solid var(--eht-trim);
     border-radius: 8px;
     padding: 18px 22px;
-    box-shadow: 0 6px 18px rgba(0,0,0,.45);
     margin-top: 0;
-    position: relative;
+    box-shadow: 0 6px 18px rgba(0,0,0,.45);
   }
   .markdown-section h1,
   .markdown-section h2 {
-    font-family: 'VT323', ui-monospace, monospace;
+    font-family: 'VT323', monospace;
     color: var(--eht-gold);
     text-shadow: 0 1px 0 #000;
-    margin-top: .4em;
-    margin-bottom: .4em;
   }
   .markdown-section h1 { font-size: 40px; }
   .markdown-section h2 { font-size: 32px; }
 
-  /* === Sidebar general === */
+  /* Sidebar */
   .sidebar {
     background:
-      linear-gradient(rgba(255,255,255,.75), rgba(255,255,255,.75)),
+      linear-gradient(rgba(255,255,255,.8), rgba(255,255,255,.8)),
       url('assets/textures/parchment.jpg');
     background-size: 256px 256px;
     border-right: 2px solid var(--eht-trim);
     box-shadow: inset 0 0 30px rgba(0,0,0,.3);
-    color: #222;
+    width: 260px;
+    transition: transform 0.3s ease;
+  }
+
+  /* Mobile hidden by default */
+  @media (max-width: 768px) {
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      transform: translateX(-100%);
+      z-index: 1000;
+    }
+    body.sidebar-open .sidebar {
+      transform: translateX(0);
+    }
+
+    /* Overlay behind sidebar */
+    .sidebar-overlay {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+    body.sidebar-open .sidebar-overlay {
+      display: block;
+    }
   }
 
   /* Sidebar links */
@@ -72,15 +91,12 @@
     margin: 2px 0;
     color: #333;
     border-radius: 4px;
-    transition: background .2s, color .2s, text-shadow .2s;
   }
   .sidebar-nav a:hover {
     background: rgba(177,140,90,.25);
     color: #000;
-    text-shadow: 0 0 6px rgba(255,216,107,.55);
   }
 
-  /* Sidebar icons */
   .sidebar-nav img.icon {
     width: 22px;
     height: 22px;
@@ -88,25 +104,7 @@
     image-rendering: pixelated;
   }
 
-  /* === Mobile sidebar fix === */
-  .sidebar {
-    max-width: 280px;
-    width: 80%;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    z-index: 9999;
-    overflow-y: auto;
-  }
-  body.close .sidebar { 
-    transform: translateX(-100%);
-  }
-  body:not(.close) .sidebar { 
-    transform: translateX(0);
-  }
-
-  /* === Theme toggle === */
+  /* Theme toggle */
   .theme-toggle {
     position: absolute;
     right: 12px; top: 12px;
@@ -124,10 +122,10 @@
 
 <body class="dark">
   <div id="app">Loading EHT Companion Hub…</div>
+  <div class="sidebar-overlay"></div>
   <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
 
   <script>
-    /* ==================== Docsify config ==================== */
     window.$docsify = {
       name: 'EHT Companion Hub',
       loadSidebar: true,
@@ -145,21 +143,25 @@
             btn.textContent = mode === 'dark' ? '🌙' : '☀️';
             try { localStorage.setItem(STORAGE_KEY, mode); } catch(e){}
           }
-          function currentTheme(){
-            try { return localStorage.getItem(STORAGE_KEY) || 'dark'; } catch(e){ return 'dark'; }
-          }
-          setTheme(currentTheme());
+          setTheme(localStorage.getItem(STORAGE_KEY) || 'dark');
 
           btn.addEventListener('click', () => {
             const next = document.body.classList.contains('dark') ? 'light' : 'dark';
             setTheme(next);
           });
 
+          // Sidebar overlay toggle
           hook.doneEach(function () {
-            const host = document.querySelector('.sidebar .app-name');
-            if (host && btn && !host.contains(btn)) {
-              host.style.position = 'relative';
-              host.appendChild(btn);
+            const overlay = document.querySelector('.sidebar-overlay');
+            overlay.addEventListener('click', () => {
+              document.body.classList.remove('sidebar-open');
+            });
+            // Hamburger button already exists in docsify
+            const toggleBtn = document.querySelector('.sidebar-toggle');
+            if (toggleBtn) {
+              toggleBtn.addEventListener('click', () => {
+                document.body.classList.toggle('sidebar-open');
+              });
             }
           });
         }
@@ -167,7 +169,6 @@
     };
   </script>
 
-  <!-- Docsify core + plugins -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
