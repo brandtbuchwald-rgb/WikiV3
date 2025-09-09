@@ -2,139 +2,246 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EHT Companion Hub</title>
 
-  <!-- Base styles (light mode default) -->
+  <!-- Docsify Themeable CSS (provides layout + baseline styles for the sidebar) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
+
   <style>
-    /* Page + typography */
-    body {
-      background: #ffffff;
-      color: #222;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      transition: background .3s, color .3s;
+    /* ---------- Design tokens ---------- */
+    :root{
+      --brand-1: #3f51b5;
+      --brand-2: #7c8cff;
+      --ink-1: #0f172a;
+      --ink-2: #1f2937;
+
+      --bg-light: #ffffff;
+      --ink-light: #222;
+      --link-light: #1565c0;
+
+      --bg-dark: #111827;     /* page */
+      --ink-dark: #e5e7eb;    /* text */
+      --muted-dark: #9ca3af;  /* subtle text */
+      --link-dark: #9db5ff;
+
+      --sidebar-dark: #0e1620;
+      --sidebar-border: rgba(255,255,255,.06);
+      --card-light: #f5f5f5;
+      --card-dark: #0f1a26;
+      --accent: #48b3ff;
+      --radius: 12px;
+      --shadow: 0 10px 30px rgba(0,0,0,.18);
     }
 
-    a { color: #1565c0; }
+    /* ---------- Page + typography ---------- */
+    body{
+      margin:0;
+      background: var(--bg-light);
+      color: var(--ink-light);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, "Helvetica Neue", Arial, "Apple Color Emoji",
+                   "Segoe UI Emoji";
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      transition: background .25s ease, color .25s ease;
+    }
+    a{ color: var(--link-light); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
 
-    /* Sidebar look */
-    .sidebar { background: #f5f5f5; transition: background .3s, color .3s; }
-    .sidebar-nav { padding: 10px; }
-    .sidebar-nav a { color: #222; text-decoration: none; }
-    .sidebar-nav a:hover { color: #1565c0; }
-
-    /* Collapsible indicators */
-    .sidebar-nav li.collapsible > .collapsible-toggle::after {
-      content: ">";
-      float: right;
-      opacity: .6;
+    /* ---------- Docsify containers polish ---------- */
+    .content{
+      max-width: 860px;
+      padding: 28px 24px 96px;
+    }
+    .markdown-section{
+      background: var(--card-light);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
     }
 
-    /* Toggle button */
-    .theme-toggle {
-      cursor: pointer;
-      border: none;
-      background: rgba(0,0,0,0.05);
-      border-radius: 4px;
-      padding: 4px 8px;
-      margin: 6px;
-      font-size: 16px;
-      transition: background .3s;
-      z-index: 3;
+    /* ---------- Sidebar look ---------- */
+    .sidebar{
+      background:
+        radial-gradient(1200px 600px at -200px -150px, rgba(72,179,255,.14), transparent 60%),
+        linear-gradient(180deg, #0f1b2a 0%, #0b1420 100%);
+      border-right: 1px solid var(--sidebar-border);
     }
-    .theme-toggle:hover { background: rgba(0,0,0,0.1); }
+    .sidebar .app-name{
+      padding: 18px 18px 12px;
+      border-bottom: 1px solid var(--sidebar-border);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent);
+      position: relative;
+    }
+    .sidebar .app-name a{
+      color: #cfe1ff;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
 
-    /* DARK THEME */
-    body.dark { background: #1e252f; color: #cfd8dc; }
-    body.dark a { color: #4da3ff; }
-    body.dark .sidebar { background: #141a23; }
-    body.dark .sidebar-nav a { color: #cfd8dc; }
-    body.dark .sidebar-nav a:hover { color: #ffffff; }
-    body.dark .theme-toggle { background: rgba(255,255,255,0.10); }
-    body.dark .theme-toggle:hover { background: rgba(255,255,255,0.20); }
+    .search{
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--sidebar-border);
+    }
+    input[type="search"]{
+      border-radius: 10px !important;
+      border: 1px solid rgba(255,255,255,.08) !important;
+      background: rgba(255,255,255,.06) !important;
+      color: #cfd8dc !important;
+    }
+
+    .sidebar-nav{ padding: 14px 10px 28px;}
+    .sidebar-nav a{
+      color:#cfd8dc;
+      border-radius: 8px;
+      padding: 8px 10px;
+      display:block;
+    }
+    .sidebar-nav a:hover{
+      background: rgba(255,255,255,.06);
+      color:#fff;
+    }
+    .sidebar-nav li.active > a{
+      background: rgba(72,179,255,.18);
+      color: #fff;
+      box-shadow: inset 0 0 0 1px rgba(72,179,255,.3);
+    }
+
+    /* Collapsible carets */
+    .sidebar-nav li.collapsible > .collapser{
+      float:right; opacity:.7; transform: translateY(2px);
+      font-size: 13px; user-select:none; cursor:pointer;
+    }
+
+    /* ---------- Theme toggle button ---------- */
+    .theme-toggle{
+      position:absolute; right:12px; top:10px;
+      border:1px solid rgba(255,255,255,.15);
+      background:rgba(255,255,255,.08);
+      color:#fff; border-radius: 999px;
+      padding:6px 10px; font-size:15px; line-height:1;
+      backdrop-filter: blur(4px);
+      cursor:pointer;
+      transition: background .2s ease, transform .05s ease;
+    }
+    .theme-toggle:active{ transform: translateY(1px); }
+    .theme-toggle:hover{ background: rgba(255,255,255,.16); }
+
+    /* ---------- Dark theme overrides ---------- */
+    body.dark{
+      background: var(--bg-dark);
+      color: var(--ink-dark);
+    }
+    body.dark a{ color: var(--link-dark); }
+    body.dark .markdown-section{ background: var(--card-dark); }
+    body.dark .content code{ background: rgba(255,255,255,.06); }
+
+    /* scrollbars (WebKit) */
+    ::-webkit-scrollbar{ width:10px; height:10px; }
+    ::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.18);
+      border-radius: 20px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
   </style>
-
-  <!-- Docisfy Themeable CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css" />
 </head>
 
+<!-- Start in dark mode; JS will adjust if a saved preference exists -->
 <body class="dark">
   <div id="app">Loading EHT Companion Hub…</div>
+  <!-- Toggle is injected into sidebar header after mount -->
   <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+
   <script>
-    // ===================== Docsify config =====================
+    /* ==================== Docsify config ==================== */
     window.$docsify = {
       name: 'EHT Companion Hub',
       loadSidebar: true,
       subMaxLevel: 2,
-      auto2top: true,
       search: 'auto',
-
-      // Collapsible sections + keep "Home" open and non-collapsible
+      auto2top: true,
+      alias: {
+        '/README':'/README.md'
+      },
       plugins: [
+        /* Move theme toggle into the sidebar header & wire up behavior */
         function (hook, vm) {
+          const STORAGE_KEY = 'eht-theme';
+          const btn = document.getElementById('themeBtn');
+
+          function setTheme(mode){
+            document.body.classList.toggle('dark', mode === 'dark');
+            btn.textContent = mode === 'dark' ? '🌙' : '☀️';
+            try { localStorage.setItem(STORAGE_KEY, mode); } catch(e){}
+          }
+          function currentTheme(){
+            try { return localStorage.getItem(STORAGE_KEY) || 'dark'; } catch(e){ return 'dark'; }
+          }
+
+          // Initial theme from storage
+          setTheme(currentTheme());
+
+          btn.addEventListener('click', () => {
+            const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+            setTheme(next);
+          });
+
           hook.doneEach(function () {
+            // Place toggle inside the sidebar title
+            const host = document.querySelector('.sidebar .app-name');
+            if (host && btn && !host.contains(btn)) {
+              host.style.position = 'relative';
+              host.appendChild(btn);
+            }
+
+            // Build collapsibles (Home stays expanded & non-collapsible)
             const nav = document.querySelector('.sidebar-nav');
             if (!nav) return;
 
-            // Make groups collapsible, but lock Home open
-            nav.querySelectorAll('li').forEach((li) => {
+            nav.querySelectorAll(':scope > ul > li').forEach(li => {
               const sub = li.querySelector(':scope > ul');
-              if (!sub) return;
+              const labelLink = li.querySelector(':scope > a');
 
-              if (li.textContent.trim().startsWith('Home')) {
-                li.classList.add('open');
-                li.classList.remove('collapsible');
-                return; // skip toggling behavior for Home
+              const isHome = labelLink && /home/i.test(labelLink.textContent.trim());
+              if (!sub || isHome) {
+                // Ensure Home looks expanded always
+                if (isHome) li.classList.add('active');
+                return;
               }
 
-              li.classList.add('collapsible');
-              const label = li.querySelector(':scope > a, :scope > p, :scope > span');
-              if (!label) return;
-              if (!li._boundToggle) {
-                label.classList.add('collapsible-label');
-                label.addEventListener('click', (e) => {
-                  // If it's a link, prevent nav and just toggle the group
-                  if (label.tagName.toLowerCase() === 'a') e.preventDefault();
-                  li.classList.toggle('open');
-                });
-                li._boundToggle = true;
-              }
+              if (li.classList.contains('collapsible-ready')) return;
+              li.classList.add('collapsible','collapsible-ready');
+
+              const caret = document.createElement('span');
+              caret.className = 'collapser';
+              caret.textContent = '▸';
+              labelLink && labelLink.appendChild(caret);
+
+              // default: collapsed
+              sub.style.display = 'none';
+
+              labelLink.addEventListener('click', (e) => {
+                // expand/collapse group if clicking the group label (not a child link)
+                if (e.target === labelLink || e.target === caret) {
+                  e.preventDefault();
+                  const opened = sub.style.display !== 'none';
+                  sub.style.display = opened ? 'none' : '';
+                  caret.textContent = opened ? '▸' : '▾';
+                }
+              });
             });
-
-            // Dock the theme toggle into the sidebar so it slides with it
-            const sidebar = document.querySelector('.sidebar');
-            const btn = document.getElementById('themeBtn');
-            if (sidebar && btn && !sidebar.contains(btn)) {
-              sidebar.appendChild(btn);
-            }
           });
         }
       ]
     };
-
-    // ===================== Theme toggle (persisted) =====================
-    const themeBtn = document.getElementById('themeBtn');
-
-    function updateThemeIcon() {
-      themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
-    }
-    function applySavedTheme() {
-      const saved = localStorage.getItem('theme');
-      if (saved === 'dark') document.body.classList.add('dark');
-      updateThemeIcon();
-    }
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
-      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-      updateThemeIcon();
-    }
-    themeBtn.addEventListener('click', toggleTheme);
-    applySavedTheme();
   </script>
 
-  <!-- Docsify + search plugin -->
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+  <!-- Docsify core + plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
 </body>
 </html>
