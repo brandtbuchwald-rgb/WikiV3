@@ -1,9 +1,9 @@
 - **Home**
-  - [EHT Companion Hub](/)
+  - [EHT Companion Hub](README.md)
 
 - **Tools**
   - [Items Database](items.html)
-  - [ATK SPD Calculator](items.html) <!-- change this to your calculator file when you add it -->
+  - [ATK SPD Calculator](items.html)  <!-- change when your calc file is added -->
 
 - **Equipment**
   - [Unique Gear](equip-unique.md)
