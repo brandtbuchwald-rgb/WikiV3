@@ -1,203 +1,144 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>EHT Companion Hub</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EHT Companion Hub</title>
 
-    <!-- themeable styles (light + dark) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css" id="darkTheme">
-
-   <style>
-  :root {
-    --sidebar-bg: #0f172a;
-    --sidebar-text: #cbd5e1;
-    --sidebar-link: #93c5fd;
-    --sidebar-link-active: #ffffff;
-    --sidebar-border: #1f2937;
-  }
-  .sidebar {
-    background: var(--sidebar-bg);
-    border-right: 1px solid var(--sidebar-border);
-    color: var(--sidebar-text);
-  }
-  .sidebar a { color: var(--sidebar-link); }
-  .sidebar a.active, .sidebar li.active > a {
-    color: var(--sidebar-link-active);
-    font-weight: 600;
-  }
-    /* Theme toggle button fixed in top-right */
-.theme-toggle {
-  position: fixed;
-  top: 12px;
-  right: 15px;
-  z-index: 3000; /* always above sidebar */
-  background: rgba(0, 0, 0, 0.4);
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  transition: background 0.2s ease;
-}
-
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-     /* Sidebar styling */
-.sidebar {
-  background: #111827; /* dark navy background */
-  color: #e5e7eb;
-  font-size: 15px;
-  padding-top: 20px;
-}
-
-.sidebar ul li a {
-  color: #9ca3af;
-  text-decoration: none;
-  display: block;
-  padding: 6px 14px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.sidebar ul li a:hover {
-  background: #1f2937;
-  color: #fff;
-}
-
-.sidebar ul li.active > a {
-  background: #2563eb; /* blue highlight */
-  color: #fff;
-}
-     /* Collapsible groups */
-.sidebar-nav li.collapsible > ul { display: none; }
-.sidebar-nav li.collapsible.open > ul { display: block; }
-
-.sidebar-nav .section-label{
-  cursor: pointer;
-  display: block;
-  padding: 6px 14px;
-  border-radius: 4px;
-  color: #9ca3af;
-}
-.sidebar-nav .section-label:hover{ background:#1f2937; color:#fff; }
-
-/* little caret */
-.sidebar-nav .section-label::after{
-  content:'▸';
-  float:right;
-  transition: transform .2s ease;
-  opacity:.8;
-}
-.sidebar-nav li.collapsible.open > .section-label::after{
-  transform: rotate(90deg);
-  opacity:1;
-}
-</style>
-  </head>
-  <body>
-    <<button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙/☀️</button>
-<div id="app">Loading EHT Companion Hub…</div>
-
-    <script>
-      // ===== Docsify config (point straight at /WikiV3/) =====
-      window.$docsify = {
-        name: 'EHT Companion Hub',
-        repo: 'brandtbuchwald-rgb/WikiV3',
-        loadSidebar: true,
-        basePath: '/WikiV3/',     // <— key line: find _sidebar.md here
-        subMaxLevel: 2,
-        search: 'auto',
-        routerMode: 'hash',
-        auto2top: true,
-        plugins: [
-          function(hook, vm){
-            hook.doneEach(function(){
-              // Auto-close drawer on link tap (mobile)
-              document.querySelectorAll('.sidebar-nav a').forEach(a=>{
-                a.addEventListener('click', ()=> document.body.classList.add('close'));
-              });
-            });
-          }
-        ]
-      };
-<script>
-  // Collapsible sidebar sections
-  window.$docsify = window.$docsify || {};
-  window.$docsify.plugins = (window.$docsify.plugins || []).concat(function (hook, vm) {
-    function buildCollapsibles() {
-      const nav = document.querySelector('.sidebar-nav');
-      if (!nav) return;
-
-      // mark 1st-level items that have children and add a clickable label
-      nav.querySelectorAll(':scope > ul > li').forEach(li => {
-        const sub = li.querySelector(':scope > ul');
-        if (!sub || li.classList.contains('collapsible-ready')) return;
-
-        li.classList.add('collapsible','collapsible-ready'); // default collapsed
-        // force "Home" section to always open
-if (li.textContent.trim().startsWith("Home")) {
-  li.classList.add('open');
-}
-        // use existing text/link as the label
-        let label = li.querySelector(':scope > a, :scope > p, :scope > span');
-        if (!label) {
-          label = document.createElement('span');
-          label.textContent = li.textContent.trim() || 'Section';
-          li.insertBefore(label, sub);
-        }
-        label.classList.add('section-label');
-        label.addEventListener('click', e => {
-          // allow normal link clicks to navigate if the label is an <a>
-          if (label.tagName.toLowerCase() !== 'a') e.preventDefault();
-          li.classList.toggle('open');
-        });
-      });
-
-      // auto-open the group that contains the current page
-      const active = nav.querySelector('a.active');
-      if (active) {
-        let p = active.parentElement;
-        while (p && p !== nav) {
-          if (p.classList && p.classList.contains('collapsible')) p.classList.add('open');
-          p = p.parentElement;
-        }
-      }
+  <!-- Base styles (light mode default) -->
+  <style>
+    /* Page + typography */
+    body {
+      background: #ffffff;
+      color: #222;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      transition: background .3s, color .3s;
     }
+    a { color: #1565c0; }
 
-    hook.doneEach(buildCollapsibles);     // after each page render
-    hook.mounted(buildCollapsibles);      // first load
-  });
-</script>
-      // ===== Theme toggle (persist) =====
-      const KEY='eht-theme';
-      const setTheme=t=>{
-        document.documentElement.setAttribute('data-theme', t==='dark'?'dark':'light');
-        localStorage.setItem(KEY,t);
-        document.getElementById('darkTheme').disabled=(t!=='dark');
-      };
-      setTheme(localStorage.getItem(KEY) || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
-      document.getElementById('themeBtn').onclick=()=>setTheme(localStorage.getItem(KEY)==='dark'?'light':'dark');
+    /* Sidebar look */
+    .sidebar { background: #f5f5f5; transition: background .3s; position: relative; }
+    .sidebar-nav { padding: 10px; }
+    .sidebar-nav a { color: #222; text-decoration: none; }
+    .sidebar-nav a:hover { color: #1565c0; }
 
-      // ===== Swipe from left edge to open drawer =====
-      (function(){
-        let sx=null,sy=null; const EDGE=24;
-        addEventListener('touchstart',e=>{sx=e.touches[0].clientX; sy=e.touches[0].clientY;},{passive:true});
-        addEventListener('touchend',e=>{
-          if(sx===null) return;
-          const dx=e.changedTouches[0].clientX-sx, dy=Math.abs(e.changedTouches[0].clientY-sy);
-          if(sx<EDGE && dx>50 && dy<40) document.body.classList.remove('close');
-          sx=sy=null;
-        },{passive:true});
-      })();
-    </script>
+    /* Collapsible indicators */
+    .sidebar-nav li.collapsible > .collapsible-label::after {
+      content: "▸";
+      float: right;
+      opacity: .6;
+    }
+    .sidebar-nav li.open.collapsible > .collapsible-label::after {
+      content: "▾";
+    }
+    .sidebar-nav li.open > ul { display: block; }
+    .sidebar-nav li ul { display: none; padding-left: 15px; }
 
-    <!-- Docsify -->
-    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
-  </body>
+    /* Theme toggle button (docked in sidebar header) */
+    .theme-toggle{
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(0,0,0,0.06);
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background .3s;
+      z-index: 3;
+    }
+    .theme-toggle:hover { background: rgba(0,0,0,0.12); }
+
+    /* DARK THEME */
+    body.dark { background: #1e252f; color: #e0e0e0; }
+    body.dark a { color: #4da3ff; }
+    body.dark .sidebar { background: #141a23; }
+    body.dark .sidebar-nav a { color: #cfd8dc; }
+    body.dark .sidebar-nav a:hover { color: #ffffff; }
+    body.dark .theme-toggle { background: rgba(255,255,255,0.10); }
+    body.dark .theme-toggle:hover { background: rgba(255,255,255,0.20); }
+  </style>
+</head>
+<body>
+  <div id="app">Loading EHT Companion Hub…</div>
+  <!-- Toggle will be moved into the sidebar by JS after Docsify mounts -->
+  <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+
+  <script>
+    // ===================== Docsify config =====================
+    window.$docsify = {
+      name: 'EHT Companion Hub',
+      loadSidebar: true,
+      subMaxLevel: 2,
+      auto2top: true,
+      search: 'auto',
+
+      // Collapsible sections + keep "Home" open and non-collapsible
+      plugins: [
+        function (hook, vm) {
+          hook.doneEach(function () {
+            const nav = document.querySelector('.sidebar-nav');
+            if (!nav) return;
+
+            // Make groups collapsible, but lock Home open
+            nav.querySelectorAll('li').forEach((li) => {
+              const sub = li.querySelector(':scope > ul');
+              if (!sub) return;
+
+              if (li.textContent.trim().startsWith('Home')) {
+                li.classList.add('open');
+                li.classList.remove('collapsible');
+                return; // skip toggling behavior for Home
+              }
+
+              li.classList.add('collapsible');
+              const label = li.querySelector(':scope > a, :scope > p, :scope > span');
+              if (!label) return;
+              if (!li._boundToggle) {
+                label.classList.add('collapsible-label');
+                label.addEventListener('click', (e) => {
+                  // If it's a link, prevent nav and just toggle the group
+                  if (label.tagName.toLowerCase() === 'a') e.preventDefault();
+                  li.classList.toggle('open');
+                });
+                li._boundToggle = true;
+              }
+            });
+
+            // Dock the theme toggle into the sidebar so it slides with it
+            const sidebar = document.querySelector('.sidebar');
+            const btn = document.getElementById('themeBtn');
+            if (sidebar && btn && !sidebar.contains(btn)) {
+              sidebar.appendChild(btn);
+            }
+          });
+        }
+      ]
+    };
+
+    // ===================== Theme toggle (persisted) =====================
+    const themeBtn = document.getElementById('themeBtn');
+
+    function updateThemeIcon() {
+      themeBtn.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+    }
+    function applySavedTheme() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark') document.body.classList.add('dark');
+      updateThemeIcon();
+    }
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+      updateThemeIcon();
+    }
+    themeBtn.addEventListener('click', toggleTheme);
+    applySavedTheme();
+  </script>
+
+  <!-- Docsify + search plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+</body>
 </html>
