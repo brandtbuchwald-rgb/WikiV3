@@ -9,6 +9,20 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 
   <style>
+    /* Sidebar icons */
+.sidebar-nav .icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 6px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+/* Hover glow + slight scale up */
+.sidebar-nav a:hover .icon {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 150, 0.8));
+}
     /* ---------- Design tokens ---------- */
 :root{
   --accent: #6ee7ff;        /* primary accent */
@@ -172,8 +186,8 @@ input[type="search"]{
 }
 /* Sidebar icons - consistent size */
 .sidebar-nav img.icon {
-  width: 24px;     /* uniform width */
-  height: 24px;    /* uniform height */
+  width: 10px;     /* uniform width */
+  height: 10px;    /* uniform height */
   object-fit: contain; /* keeps pixel art sharp */
   vertical-align: middle;
   margin-right: 8px;
