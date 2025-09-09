@@ -1,10 +1,13 @@
+- **Home**
+  - [EHT Companion Hub](/)
+
 - **Tools**
-  - [Attack Speed Calculator](items.html)
   - [Items Database](items.html)
+  - [ATK SPD Calculator](items.html) <!-- change this to your calculator file when you add it -->
 
 - **Equipment**
   - [Unique Gear](equip-unique.md)
-  - [Accessories](equip-accessories.md)
+  - [Accessories (Necklaces & Rings)](equip-accessories.md)
   - [World Boss Weapons](equip-worldboss.md)
   - [Chaos Gear](equip-chaos.md)
   - [Arena Gear](equip-arena.md)
