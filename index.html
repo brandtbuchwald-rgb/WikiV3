@@ -5,115 +5,216 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EHT Companion Hub</title>
 
+  <!-- Docsify Themeable CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
 
   <style>
-/* ===== Reset Docsify layout ===== */
-#app {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  overflow: hidden;
-}
-.sidebar {
-  width: 280px;
-  flex-shrink: 0;
-  height: 100%;
-  overflow-y: auto;
-  position: fixed;
-  top: 0; left: 0;
-  z-index: 10;
-  background: url("assets/textures/parchment.jpg") center/cover no-repeat;
-  border-right: 3px solid #ceb089;
-  box-shadow: inset 0 0 40px rgba(0,0,0,.4);
-}
-.sidebar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("assets/textures/torn-frame.png") center/cover no-repeat;
-  opacity: 0.65;
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-.content {
-  margin-left: 280px; /* leave space for sidebar */
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-}
+  /* ===== EHT Palette ===== */
+  :root {
+    --eht-bg:        #182629;
+    --eht-trim:      #ceb089;
+    --eht-gold:      #e0c58f;
+    --eht-ink:       #e7efe9;
+    --eht-ink-dim:   #b7c5bf;
+    --eht-link:      #9bd4ff;
+    --eht-link-2:    #ffd166;
+    --eht-shadow:    rgba(0,0,0,.5);
+  }
 
-/* ===== Cover page fix ===== */
-.cover {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 40px);
-  padding: 20px;
-}
-.cover .cover-main {
-  background: url("assets/textures/parchment.jpg") center/cover no-repeat;
-  border: 2px solid #ceb089;
-  border-radius: 8px;
-  padding: 32px;
-  box-shadow: inset 0 0 40px rgba(0,0,0,.5);
-  position: relative;
-}
-.cover .cover-main::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("assets/textures/torn-frame.png") center/cover no-repeat;
-  opacity: 0.55;
-  mix-blend-mode: multiply;
-  border-radius: 8px;
-  pointer-events: none;
-}
+  @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-/* ===== Sidebar nav polish ===== */
-.sidebar .app-name {
-  font-family: 'VT323', monospace;
-  font-size: 18px;
-  color: #e0c58f;
-  padding: 16px;
-  text-shadow: 0 1px 2px #000;
-  border-bottom: 2px solid #ceb089;
-}
-.sidebar-nav a {
-  display: flex;
-  align-items: center;
-  padding: 6px 10px;
-  margin: 2px 0;
-  color: #444;
-  border-radius: 4px;
-}
-.sidebar-nav a:hover {
-  color: #fff;
-  background: rgba(177,140,90,.25);
-}
-.sidebar-nav img.icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
-  image-rendering: pixelated;
-}
+  /* ===== Global ===== */
+  body {
+    margin: 0;
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+    background: radial-gradient(1200px 900px at 30% -10%, #213538 0%, var(--eht-bg) 60%);
+    color: var(--eht-ink);
+  }
+  a { color: var(--eht-link); text-decoration: none; }
+  a:hover { color: var(--eht-link-2); text-shadow: 0 0 6px rgba(255,209,102,.6); }
+
+  /* ===== Content area ===== */
+  .content {
+    padding-top: 140px; /* leave space for cover plate */
+    max-width: 920px;
+    margin: 0 auto;
+  }
+  .markdown-section {
+    background: linear-gradient(#2a3d42, #1b2b2e) padding-box,
+                linear-gradient(180deg, #f1e1c4, #8b6a3d 70%, #3e2c18) border-box;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 18px 22px;
+    box-shadow: inset 0 1px 0 #2a3d42, 0 10px 26px -8px var(--eht-shadow);
+  }
+  .markdown-section h1,
+  .markdown-section h2 {
+    font-family: 'VT323', ui-monospace, monospace;
+    color: var(--eht-gold);
+    text-shadow: 0 1px 0 #000;
+    margin-top: .4em;
+    margin-bottom: .4em;
+  }
+  .markdown-section h1 { font-size: 40px; }
+  .markdown-section h2 { font-size: 32px; }
+
+  /* ===== Cover Plate (EHT Hub Title) ===== */
+  .cover-plate {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: url("assets/textures/parchment.jpg") repeat;
+    background-size: cover;
+    border: 3px solid var(--eht-trim);
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.6);
+    padding: 18px 28px;
+    font-family: 'VT323', ui-monospace, monospace;
+    font-size: 36px;
+    color: var(--eht-gold);
+    text-align: center;
+    z-index: 50;
+  }
+  .cover-plate::after {
+    content:"";
+    position:absolute;
+    inset:0;
+    background: url("assets/textures/torn-frame.png") no-repeat center/cover;
+    pointer-events:none;
+    z-index: 1;
+  }
+
+  /* ===== Sidebar (parchment + torn overlay) ===== */
+  .sidebar {
+    background:
+      url("assets/textures/parchment.jpg") repeat,
+      linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9));
+    background-size: cover;
+    border: 3px solid var(--eht-trim);
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    position: relative;
+    overflow: hidden;
+  }
+  .sidebar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("assets/textures/torn-frame.png") no-repeat center/cover;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .sidebar .app-name {
+    font-family: 'VT323', ui-monospace, monospace;
+    font-size: 18px;
+    color: var(--eht-gold);
+    padding: 16px;
+    border-bottom: 2px solid var(--eht-trim);
+    text-shadow: 0 1px 2px #000;
+    position: relative;
+    z-index: 3;
+  }
+  .sidebar-nav { padding: 12px; position: relative; z-index: 3; }
+  .sidebar-nav strong {
+    display: block;
+    margin: 12px 0 6px;
+    padding: 4px 8px;
+    font-size: 14px;
+    color: var(--eht-gold);
+    background: linear-gradient(#3b3b3b, #2a2a2a);
+    border: 2px solid var(--eht-trim);
+    border-radius: 4px;
+    text-align: center;
+    text-shadow: 0 0 6px rgba(155,125,245,.35);
+  }
+  .sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px;
+    margin: 2px 0;
+    color: var(--eht-ink-dim);
+    border-radius: 4px;
+    transition: background .2s, color .2s, text-shadow .2s;
+  }
+  .sidebar-nav a:hover {
+    color: #fff;
+    background: rgba(177,140,90,.25);
+    text-shadow: 0 0 6px rgba(255,216,107,.55),
+                 0 0 12px rgba(155,125,245,.35);
+  }
+
+  /* ===== Icons ===== */
+  .sidebar-nav img.icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    image-rendering: pixelated;
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .sidebar-nav a:hover img.icon {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 6px rgba(255, 255, 150, 0.8));
+  }
+
+  /* ===== Theme toggle ===== */
+  .theme-toggle {
+    position: fixed;
+    right: 20px;
+    top: 22px;
+    border: 2px solid var(--eht-trim);
+    background: rgba(0,0,0,.3);
+    color: var(--eht-gold);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 51;
+  }
+  .theme-toggle:hover { background: rgba(0,0,0,.5); }
   </style>
 </head>
 
-<body>
+<body class="dark">
+  <div class="cover-plate">EHT Companion Hub</div>
   <div id="app">Loading EHT Companion Hub…</div>
+  <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
 
   <script>
     window.$docsify = {
       name: 'EHT Companion Hub',
       loadSidebar: true,
-      coverpage: true,
-      onlyCover: false,
       subMaxLevel: 2,
-      search: 'auto'
+      search: 'auto',
+      auto2top: true,
+      alias: { '/README':'/README.md' },
+      plugins: [
+        function (hook, vm) {
+          const STORAGE_KEY = 'eht-theme';
+          const btn = document.getElementById('themeBtn');
+
+          function setTheme(mode){
+            document.body.classList.toggle('dark', mode === 'dark');
+            btn.textContent = mode === 'dark' ? '🌙' : '☀️';
+            try { localStorage.setItem(STORAGE_KEY, mode); } catch(e){}
+          }
+          function currentTheme(){
+            try { return localStorage.getItem(STORAGE_KEY) || 'dark'; }
+            catch(e){ return 'dark'; }
+          }
+
+          setTheme(currentTheme());
+          btn.addEventListener('click', () => {
+            const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+            setTheme(next);
+          });
+        }
+      ]
     };
   </script>
 
+  <!-- Docsify core + plugins -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
