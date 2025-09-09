@@ -1,0 +1,69 @@
+[
+  {
+    "name": "Truthful Frost Giant Cuirass",
+    "slot": "armor",
+    "rarity": "unique",
+    "category": "unique",
+    "effect": [
+      "Enhanced Frost Wave on hit, chance 10\u201325%",
+      "Random Options \u00d74"
+    ],
+    "image": "assets/items/image 20.PNG"
+  },
+  {
+    "name": "Armor of Absorption",
+    "slot": "armor",
+    "rarity": "unique",
+    "category": "unique",
+    "effect": [
+      "Take 15\u201330% less dmg for 6s if damage\u2011absorbing shield activates",
+      "Random Options \u00d74"
+    ],
+    "image": "assets/items/image 21.PNG"
+  },
+  {
+    "name": "Truthful Bloodfist",
+    "slot": "gloves",
+    "rarity": "unique",
+    "category": "unique",
+    "effect": [
+      "Enhanced Bloody Berserk Lv.1\u20133 always active",
+      "Random Options \u00d74"
+    ],
+    "image": "assets/items/image 22.PNG"
+  },
+  {
+    "name": "Hand of Midas",
+    "slot": "ring",
+    "rarity": "unique",
+    "category": "unique",
+    "effect": [
+      "Gold gain +35\u201350%",
+      "Random Options \u00d74"
+    ],
+    "image": "assets/items/image 23.PNG"
+  },
+  {
+    "name": "Truthful Greaves of Wind",
+    "slot": "boots",
+    "rarity": "unique",
+    "category": "unique",
+    "effect": [
+      "ATK +3\u201310% of Movement Speed increase (cap 40%)",
+      "Movement Speed +17\u201332%",
+      "Random Options \u00d73"
+    ],
+    "image": "assets/items/image 24.PNG"
+  },
+  {
+    "name": "Vampire Boots",
+    "slot": "boots",
+    "rarity": "unique",
+    "category": "unique",
+    "effect": [
+      "Blood Explosion Lv.1\u20133 can be activated",
+      "Random Options \u00d74"
+    ],
+    "image": "assets/items/image 25.PNG"
+  }
+]

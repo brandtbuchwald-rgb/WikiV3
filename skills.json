@@ -1,0 +1,61 @@
+[
+  {
+    "name": "King of the Underworld",
+    "levels": {
+      "1": {
+        "dungeon_dmg_taken": "-15%",
+        "atk": "+10%"
+      },
+      "2": {
+        "dungeon_dmg_taken": "-25%",
+        "atk": "+15%"
+      },
+      "3": {
+        "dungeon_dmg_taken": "-40%",
+        "atk": "+25%"
+      }
+    }
+  },
+  {
+    "name": "Commander's Privilege",
+    "effect": "While active: facility cost -50%; materials/gold bound to Town/Storage; 30% gold bound to Town."
+  },
+  {
+    "name": "Trinity",
+    "levels": {
+      "1": {
+        "atk": "+10%",
+        "aspd": "+3%",
+        "crit_chance": "+3%"
+      },
+      "2": {
+        "atk": "+20%",
+        "aspd": "+5%",
+        "crit_chance": "+5%"
+      },
+      "3": {
+        "atk": "+30%",
+        "aspd": "+7%",
+        "crit_chance": "+7%"
+      }
+    }
+  },
+  {
+    "name": "Sylph's Blessing",
+    "levels": {
+      "1": {
+        "crit_chance": "+5% (6s)",
+        "crit_dmg": "+20%"
+      },
+      "2": {
+        "crit_chance": "+10% (6s)",
+        "crit_dmg": "+35%"
+      },
+      "3": {
+        "crit_chance": "+15% (6s)",
+        "crit_dmg": "+50%"
+      }
+    },
+    "note": "Cannot be cast twice while active."
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Darkness Sword",
+    "slot": "weapon",
+    "rarity": "legendary",
+    "category": "worldboss",
+    "craft": "Lv5 Blacksmith; Lich Lord\u2019s Essence \u00d770; Phoenix Feather \u00d7120",
+    "effect": [
+      "Ignore 30\u201350% DEF",
+      "15\u201325% chance Dark Fissure on attack",
+      "Overall ATK +11\u201323%",
+      "Damage to monsters +20\u201335%"
+    ],
+    "image": "assets/items/image 26.PNG"
+  },
+  {
+    "name": "Darkness Hammer",
+    "slot": "weapon",
+    "rarity": "legendary",
+    "category": "worldboss",
+    "craft": "Lv5 Blacksmith; Lich Lord\u2019s Essence \u00d770; Phoenix Feather \u00d7120",
+    "effect": [
+      "Ignore 30\u201350% DEF",
+      "15\u201325% chance Dark Lightning on attack",
+      "Overall ATK +11\u201323%",
+      "Damage to monsters +20\u201335%"
+    ],
+    "image": "assets/items/image 26.PNG"
+  },
+  {
+    "name": "Darkness Bow",
+    "slot": "weapon",
+    "rarity": "legendary",
+    "category": "worldboss",
+    "craft": "Lv5 Blacksmith; Lich Lord\u2019s Essence \u00d770; Phoenix Feather \u00d7120",
+    "effect": [
+      "Ignore 30\u201350% DEF",
+      "25\u201335% chance Feather Shot on attack",
+      "Overall ATK +11\u201323%",
+      "Damage to monsters +20\u201335%"
+    ],
+    "image": "assets/items/image 26.PNG"
+  },
+  {
+    "name": "Darkness Staff",
+    "slot": "weapon",
+    "rarity": "legendary",
+    "category": "worldboss",
+    "craft": "Lv5 Blacksmith; Lich Lord\u2019s Essence \u00d770; Phoenix Feather \u00d7120",
+    "effect": [
+      "Ignore 30\u201350% DEF",
+      "15\u201325% chance Soul Eater on attack",
+      "Overall ATK +11\u201323%",
+      "Damage to monsters +20\u201335%"
+    ],
+    "image": "assets/items/image 26.PNG"
+  }
+]

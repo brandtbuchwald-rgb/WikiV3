@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Ares' Sword",
+    "slot": "weapon",
+    "rarity": "SSS",
+    "category": "arena",
+    "atk_spd": 2.2,
+    "effect": [
+      "Ignore 21\u201339% DEF",
+      "Berserker's Wrath Lv.1\u20133 always active",
+      "Total ATK +16\u201326%",
+      "CRIT DMG to Primates +40\u201355%",
+      "1\u20135% damage dealt to Hunter"
+    ],
+    "price": "Arena Token \u00d7250",
+    "image": "assets/items/image 28.PNG"
+  },
+  {
+    "name": "Omega Mahes",
+    "slot": "weapon",
+    "rarity": "SSS",
+    "category": "arena",
+    "atk_spd": 2.5,
+    "effect": [
+      "15\u201325% chance to cast Evasion Lv.1 on attack",
+      "Damage received during Barrier \u221210\u201320%",
+      "HP +15\u201330%",
+      "CRIT DMG received \u221213\u201328%",
+      "Damage taken from Hunter +10\u201325%"
+    ],
+    "price": "Arena Token \u00d7250",
+    "image": "assets/items/image 28.PNG"
+  },
+  {
+    "name": "Helios' Hammer",
+    "slot": "weapon",
+    "rarity": "SSS",
+    "category": "arena",
+    "atk_spd": 2.5,
+    "effect": [
+      "Ignore 21\u201339% DEF",
+      "Sun's Aura 10\u201325% chance on attack",
+      "Total ATK +16\u201326%",
+      "CRIT DMG to Primates +40\u201355%",
+      "1\u20135% damage dealt to Hunter"
+    ],
+    "price": "Arena Token \u00d7250",
+    "image": "assets/items/image 28.PNG"
+  }
+]

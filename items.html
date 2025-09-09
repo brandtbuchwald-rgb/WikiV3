@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Items Database</title>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <style>
+    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid #e5e5e5;padding:8px;text-align:left}
+    img{height:28px}
+  </style>
+</head>
+<body>
+  <h1>Items Database</h1>
+  <div class="row">
+    <label>Dataset
+      <select id="dataset">
+        <option value="unique.json">Unique Equipment</option>
+        <option value="accessories.json">Accessories</option>
+        <option value="worldboss.json">World Boss Weapons</option>
+        <option value="chaos.json">Chaos Gear</option>
+        <option value="arena.json">Arena Gear</option>
+      </select>
+    </label>
+    <input id="q" placeholder="Search name/effect..." />
+    <select id="slot"><option value="">All slots</option></select>
+    <select id="rarity"><option value="">All rarities</option></select>
+  </div>
+  <table>
+    <thead><tr><th>Image</th><th>Name</th><th>Slot</th><th>Rarity</th><th>Effect</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <script>
+    const $ = s => document.querySelector(s);
+    let DATA=[];
+    async function load(ds){
+      const r = await fetch('../data/'+ds);
+      DATA = await r.json();
+      const slots = [...new Set(DATA.map(x=>x.slot||'').filter(Boolean))].sort();
+      const rarities = [...new Set(DATA.map(x=>x.rarity||'').filter(Boolean))].sort();
+      $('#slot').innerHTML = '<option value="">All slots</option>'+slots.map(s=>`<option>${s}</option>`).join('');
+      $('#rarity').innerHTML = '<option value="">All rarities</option>'+rarities.map(s=>`<option>${s}</option>`).join('');
+      render();
+    }
+    function effToStr(e){ if(!e) return ''; if(Array.isArray(e)) return e.join(' • '); return e; }
+    function render(){
+      const q = $('#q').value.toLowerCase().trim();
+      const s = $('#slot').value; const r = $('#rarity').value;
+      const rows = DATA.filter(x=>
+        (!q || (x.name?.toLowerCase().includes(q) || effToStr(x.effect).toLowerCase().includes(q))) &&
+        (!s || (x.slot||'')===s) &&
+        (!r || (x.rarity||'')===r)
+      );
+      $('#tbody').innerHTML = rows.map(x=>`<tr>
+        <td>${x.image?`<img src="../${x.image}">`:''}</td>
+        <td>${x.name||''}</td>
+        <td>${x.slot||''}</td>
+        <td>${x.rarity||''}</td>
+        <td>${effToStr(x.effect)}</td>
+      </tr>`).join('');
+    }
+    ['q','slot','rarity','dataset'].forEach(id=>document.getElementById(id).addEventListener('input', ()=>{
+      if(id==='dataset'){ load($('#dataset').value); } else { render(); }
+    }));
+    load($('#dataset').value);
+  </script>
+</body>
+</html>

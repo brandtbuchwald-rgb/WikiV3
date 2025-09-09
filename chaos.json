@@ -1,0 +1,60 @@
+[
+  {
+    "name": "Chaos Armor/Gloves/Boots",
+    "slot": "armor",
+    "rarity": "chaos",
+    "category": "chaos",
+    "effect": [
+      "Total ATK +14\u201326%",
+      "9\u201319% chance to reduce damage received by 25%",
+      "HQ material chance +14\u201326%"
+    ]
+  },
+  {
+    "name": "Chaos Belt",
+    "slot": "belt",
+    "rarity": "chaos",
+    "category": "chaos",
+    "effect": [
+      "HP +14\u201326%",
+      "Boss damage +25\u201340%",
+      "HQ material chance +14\u201326%"
+    ]
+  },
+  {
+    "name": "Sword of Chaos",
+    "slot": "weapon",
+    "rarity": "chaos",
+    "category": "chaos",
+    "effect": [
+      "See equipment details (TBD)"
+    ]
+  },
+  {
+    "name": "Hammer of Chaos",
+    "slot": "weapon",
+    "rarity": "chaos",
+    "category": "chaos",
+    "effect": [
+      "See equipment details (TBD)"
+    ]
+  },
+  {
+    "name": "Bow of Chaos",
+    "slot": "weapon",
+    "rarity": "chaos",
+    "category": "chaos",
+    "effect": [
+      "See equipment details (TBD)"
+    ]
+  },
+  {
+    "name": "Staff of Chaos",
+    "slot": "weapon",
+    "rarity": "chaos",
+    "category": "chaos",
+    "effect": [
+      "See equipment details (TBD)"
+    ]
+  }
+]
