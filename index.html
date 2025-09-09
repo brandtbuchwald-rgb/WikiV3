@@ -27,11 +27,57 @@
     color: var(--sidebar-link-active);
     font-weight: 600;
   }
+    /* Theme toggle button fixed in top-right */
+.theme-toggle {
+  position: fixed;
+  top: 12px;
+  right: 15px;
+  z-index: 3000; /* always above sidebar */
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+     /* Sidebar styling */
+.sidebar {
+  background: #111827; /* dark navy background */
+  color: #e5e7eb;
+  font-size: 15px;
+  padding-top: 20px;
+}
+
+.sidebar ul li a {
+  color: #9ca3af;
+  text-decoration: none;
+  display: block;
+  padding: 6px 14px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.sidebar ul li a:hover {
+  background: #1f2937;
+  color: #fff;
+}
+
+.sidebar ul li.active > a {
+  background: #2563eb; /* blue highlight */
+  color: #fff;
+}
 </style>
   </head>
   <body>
-    <div id="app">Loading EHT Companion Hub…</div>
-    <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙/☀️</button>
+    <<button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙/☀️</button>
+<div id="app">Loading EHT Companion Hub…</div>
 
     <script>
       // ===== Docsify config (point straight at /WikiV3/) =====
