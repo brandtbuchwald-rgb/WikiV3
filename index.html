@@ -5,109 +5,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EHT Companion Hub</title>
 
-  <!-- Base theme (layout + defaults) -->
+  <!-- Docsify & Themeable -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
 
   <style>
-  :root{
-    --eht-bg: #182629;
+  :root {
+    --eht-bg-dark: #182629;
+    --eht-bg-light: #f6f6f6;
     --eht-trim: #ceb089;
     --eht-gold: #e0c58f;
-    --eht-ink: #e7efe9;
+    --eht-ink-dark: #e7efe9;
+    --eht-ink-light: #2b2b2b;
     --eht-link: #9bd4ff;
     --eht-link-2: #ffd166;
   }
 
-  /* Page */
-  body{
-    margin:0;
+  /* base */
+  body {
+    margin: 0;
     font-family: ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;
-    background: radial-gradient(1200px 900px at 30% -10%, #213538 0%, var(--eht-bg) 60%);
-    color:var(--eht-ink);
+    background: var(--eht-bg-dark);
+    color: var(--eht-ink-dark);
+    transition: background .3s ease, color .3s ease;
   }
-  a{ color:var(--eht-link); text-decoration:none; }
-  a:hover{ color:var(--eht-link-2); }
+  body.light {
+    background: var(--eht-bg-light);
+    color: var(--eht-ink-light);
+  }
 
-  /* Content card */
-  .markdown-section{
+  a { color: var(--eht-link); text-decoration: none; }
+  a:hover { color: var(--eht-link-2); }
+
+  /* markdown section */
+  .markdown-section {
     background: rgba(24,38,41,.85);
     border: 2px solid var(--eht-trim);
     border-radius: 10px;
     padding: 20px 22px;
     box-shadow: 0 6px 18px rgba(0,0,0,.45);
+    transition: background .3s ease;
   }
-  .markdown-section h1,.markdown-section h2{
+  body.light .markdown-section {
+    background: rgba(255,255,255,.9);
+  }
+
+  /* headers */
+  .markdown-section h1,
+  .markdown-section h2 {
     font-family: 'VT323', monospace;
     color: var(--eht-gold);
     text-shadow: 0 1px 0 #000;
-    margin-top:.2em;
-    margin-bottom:.4em;
+    margin-top: .2em;
+    margin-bottom: .4em;
   }
-  .markdown-section h1{ font-size: 42px; }
-  .markdown-section h2{ font-size: 32px; }
 
-  /* Sidebar look */
-  .sidebar{
+  /* sidebar */
+  .sidebar {
     background:
-      linear-gradient(rgba(255,255,255,.82), rgba(255,255,255,.82)),
+      linear-gradient(rgba(255,255,255,.9), rgba(255,255,255,.9)),
       url('assets/textures/parchment.jpg');
     background-size: 256px 256px;
     border-right: 2px solid var(--eht-trim);
     box-shadow: inset 0 0 30px rgba(0,0,0,.28);
-    width: 280px;                 /* desktop width */
-    transition: transform .28s ease;
+    width: 280px;
+    transition: transform .3s ease;
   }
-  .sidebar .app-name{
-    font-family: 'VT323', monospace;
-    color: var(--eht-gold);
-    text-shadow: 0 1px 0 #000;
-  }
-  .sidebar-nav a{
-    display:flex; align-items:center;
-    padding: 8px 10px; margin: 2px 0;
-    color:#2b2b2b; border-radius:6px;
-    transition: background .2s ease,color .2s ease;
-  }
-  .sidebar-nav a:hover{
-    background: rgba(177,140,90,.22);
-    color:#000;
-  }
-  .sidebar-nav img.icon{
-    width:22px; height:22px; margin-right:8px; image-rendering:pixelated;
+  body.light .sidebar {
+    background:
+      linear-gradient(rgba(246,246,246,.95), rgba(246,246,246,.95)),
+      url('assets/textures/parchment.jpg');
   }
 
-  /* THE IMPORTANT PART: mobile slide/hide that follows Docsify's .close class */
-  @media (max-width: 768px){
-    .sidebar{
+  /* mobile slide */
+  @media (max-width: 768px) {
+    .sidebar {
       position: fixed;
       top: 0; left: 0; bottom: 0;
-      width: 86vw;                 /* responsive mobile width */
-      max-width: 320px;
-      transform: translateX(-100%);/* hidden by default */
+      transform: translateX(-100%);
       z-index: 1000;
     }
-    /* When body is NOT .close (Docsify opens the sidebar), slide in */
-    body:not(.close) .sidebar{
+    body:not(.close) .sidebar {
       transform: translateX(0);
     }
-
-    /* Tap-to-close overlay */
-    .sidebar-overlay{
-      position: fixed; inset: 0;
+    .content { margin-left: 0 !important; }
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
       background: rgba(0,0,0,.5);
       z-index: 999;
       display: none;
     }
-    body:not(.close) .sidebar-overlay{ display:block; }
-
-    /* prevent content shift on mobile */
-    .content{ margin-left: 0 !important; }
+    body:not(.close) .sidebar-overlay { display: block; }
   }
 
-  /* Theme toggle button */
-  .theme-toggle{
+  /* toggle button */
+  .theme-toggle {
     position: fixed; right: 12px; top: 12px;
     border: 2px solid var(--eht-trim);
     background: rgba(0,0,0,.35);
@@ -117,19 +110,17 @@
     font-size: 16px;
     z-index: 1100;
     cursor: pointer;
-    backdrop-filter: blur(2px);
   }
-  .theme-toggle:hover{ background: rgba(0,0,0,.55); }
+  body.light .theme-toggle { background: rgba(255,255,255,.6); color: #444; }
   </style>
 </head>
 
-<body class="dark">
+<body class="close dark">
   <div id="app">Loading EHT Companion Hub…</div>
   <div class="sidebar-overlay"></div>
   <button id="themeBtn" class="theme-toggle" aria-label="Toggle theme">🌙</button>
 
   <script>
-    /* ================= Docsify config ================= */
     window.$docsify = {
       name: 'EHT Companion Hub',
       loadSidebar: true,
@@ -139,10 +130,11 @@
       alias: { '/README':'/README.md' },
       plugins: [
         function (hook, vm) {
-          /* Theme toggle */
+          /* THEME TOGGLE */
           const KEY='eht-theme';
           const btn=document.getElementById('themeBtn');
           const setTheme = m=>{
+            document.body.classList.toggle('light', m==='light');
             document.body.classList.toggle('dark', m==='dark');
             btn.textContent = m==='dark' ? '🌙' : '☀️';
             try{ localStorage.setItem(KEY,m);}catch(e){}
@@ -152,19 +144,12 @@
             setTheme(document.body.classList.contains('dark')?'light':'dark');
           });
 
+          /* CLOSE SIDEBAR WHEN CLICKING OVERLAY OR LINK */
           hook.doneEach(function(){
-            /* Tap overlay or any nav link to close sidebar on mobile */
             const overlay=document.querySelector('.sidebar-overlay');
-            if(overlay){
-              overlay.onclick=()=>document.body.classList.add('close'); // Docsify's class to hide
-            }
-            const links=document.querySelectorAll('.sidebar-nav a');
-            links.forEach(a=>{
-              a.addEventListener('click',()=>{
-                if (window.matchMedia('(max-width: 768px)').matches){
-                  document.body.classList.add('close');
-                }
-              });
+            if(overlay){ overlay.onclick=()=>document.body.classList.add('close'); }
+            document.querySelectorAll('.sidebar-nav a').forEach(a=>{
+              a.onclick=()=>{ if(window.matchMedia('(max-width:768px)').matches){document.body.classList.add('close');} };
             });
           });
         }
@@ -172,7 +157,6 @@
     };
   </script>
 
-  <!-- Docsify core + search -->
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
